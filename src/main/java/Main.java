@@ -4,6 +4,6 @@ public class Main {
         EditorModel editorModel = new EditorModel();
         EditorView editorView = new EditorView();
         EditorController editorController = new EditorController(editorModel, editorView);
-        editorController.contol();
+        editorController.control();
     }
 }

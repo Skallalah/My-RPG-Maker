@@ -5,6 +5,8 @@ import java.awt.*;
 public class EditorView extends JFrame {
 
     JButton openButton;
+    JButton newButton;
+    JButton saveButton;
 
     public EditorView() {
         setTitle("MyRPGMaker");
@@ -33,13 +35,13 @@ public class EditorView extends JFrame {
         toolBar.setFloatable(false);
         toolBar.setLayout(new BoxLayout(toolBar, BoxLayout.X_AXIS));
         ImageIcon new_b = getIcon("new.png");
-        JButton newButton = new JButton(new_b);
+        newButton = new JButton(new_b);
         toolBar.add(newButton);
         ImageIcon open_b = getIcon("open.png");
         openButton = new JButton(open_b);
         toolBar.add(openButton);
         ImageIcon save_b = getIcon("save.png");
-        JButton saveButton = new JButton(save_b);
+        saveButton = new JButton(save_b);
         toolBar.add(saveButton);
         ImageIcon cut_b = getIcon("cut.png");
         JButton cutButton = new JButton(cut_b);
@@ -88,7 +90,14 @@ public class EditorView extends JFrame {
         return new ImageIcon(new ImageIcon("resources/icons/" + path).getImage().getScaledInstance(18, 18,  java.awt.Image.SCALE_SMOOTH));
     }
 
-    public JButton getButton() {
+    public JButton getOpenButton() {
         return openButton;
     }
+    public JButton getNewButton() {
+        return newButton;
+    }
+    public JButton getSaveButton() {
+        return saveButton;
+    }
+
 }
