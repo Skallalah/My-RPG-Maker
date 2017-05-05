@@ -1,0 +1,23 @@
+My RPG Maker:
+
+  TODO:
+    EDITOR:
+      - MVC pattern (+ Observer design pattern)
+      - General Interface
+      - Multithreading (ExecutorService ou SwingWorker)
+      - Loading of sprites (type and error checking)
+      - World files design
+      - World files save and open features
+      - Basic tools for placement and selection
+      - Handling of several maps
+      - Handling of history
+
+    GAME ENGINE:
+      - Map display
+      - Player handling
+      - NPCs handling
+
+    + Additionnal features
+
+  DONE:
+

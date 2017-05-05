@@ -1,0 +1,28 @@
+*************************************************************************
+*************************************************************************
+
+My RPG Maker :
+This project is made up of two parts. First, the RPG game editor which intends
+to allow users to create their own games. Second, the game engine that users
+will use to play the awesome game of its own that he just created.
+
+The game editor will have several core features such as :
+  - A general interface
+  - A way of choosing from different kind of sprites
+  - A specific file format to open, modify and save worlds
+  - Basic tools to edit a map
+  - Selection tools
+  - A way to handle several maps with different sizes at the same time
+  - Registering of edition history
+
+
+The game engine will have several core features such as :
+  - Rendering of a map
+  - Player handling
+  - NPC handling
+
+
+Each of these two parts will have additionnal features.
+
+*************************************************************************
+*************************************************************************
