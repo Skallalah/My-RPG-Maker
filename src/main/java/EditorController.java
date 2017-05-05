@@ -34,10 +34,7 @@ public class EditorController {
         actionNewListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-              //  JFileChooser fileChooser = new JFileChooser();
-           //     fileChooser.setDialogTitle("Create a new file");
-              //  int returnVal = fileChooser;
-
+                NewFrame newFrame = new NewFrame();
             }
         };
 

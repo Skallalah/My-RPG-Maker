@@ -44,7 +44,7 @@ public class GameMap {
         return map_.get(y).get(x).isWalkable();
     }
 
-    public boolean setWalkable(int x, int y, boolean walkable) {
+    public void setWalkable(int x, int y, boolean walkable) {
         map_.get(y).get(x).setWalkable(walkable);
     }
 
