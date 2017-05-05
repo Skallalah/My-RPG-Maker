@@ -44,8 +44,16 @@ public class GameMap {
         return map_.get(y).get(x).isWalkable();
     }
 
-    public boolean setWalkable(int x, int y, boolean walkable) {
+    public void setWalkable(int x, int y, boolean walkable) {
         map_.get(y).get(x).setWalkable(walkable);
+    }
+
+    public void setPathTile(int x, int y, String path) {
+        map_.get(y).get(x).setPath_img(path);
+    }
+
+    public String setPathTile(int x, int y) {
+        return map_.get(y).get(x).getPath_img();
     }
 
     private String name_;

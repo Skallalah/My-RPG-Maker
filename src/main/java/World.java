@@ -20,6 +20,10 @@ public class World {
         return maps_.get(index);
     }
 
+    public void addMap(GameMap map) {
+        maps_.add(map);
+    }
+
 
 
     private String name_;
