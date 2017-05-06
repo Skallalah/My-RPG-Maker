@@ -4,9 +4,10 @@ import java.awt.*;
 
 public class EditorView extends JFrame {
 
-    JButton openButton;
     JButton newButton;
+    JButton openButton;
     JButton saveButton;
+    JTabbedPane rightPanel;
 
     public EditorView() {
         setTitle("MyRPGMaker");
@@ -72,12 +73,11 @@ public class EditorView extends JFrame {
 
         JSplitPane leftPanel = new JSplitPane(JSplitPane.VERTICAL_SPLIT, topLeftPanel, bottomLeftPanel);
 
-        JTabbedPane rightPanel = new JTabbedPane();
+        rightPanel = new JTabbedPane();
         MapPanel mapPanel = new MapPanel("resources/sprites/backgroundTile/grass.png", 200, 200);
         JScrollPane map = new JScrollPane(mapPanel);
         map.setPreferredSize(new Dimension(0,0));
         rightPanel.addTab("Map 1", map);
-        rightPanel.addTab("Map 2", new JPanel());
 
         JSplitPane splitPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPanel, rightPanel);
         add(splitPanel);
@@ -91,14 +91,18 @@ public class EditorView extends JFrame {
         return new ImageIcon(new ImageIcon("resources/icons/" + path).getImage().getScaledInstance(18, 18,  java.awt.Image.SCALE_SMOOTH));
     }
 
-    public JButton getOpenButton() {
-        return openButton;
-    }
     public JButton getNewButton() {
         return newButton;
     }
+    public JButton getOpenButton() {
+        return openButton;
+    }
     public JButton getSaveButton() {
         return saveButton;
+    }
+
+    public Component getMap() {
+        return rightPanel.getSelectedComponent();
     }
 
 }

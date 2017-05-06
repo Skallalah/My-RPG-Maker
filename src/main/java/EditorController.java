@@ -1,6 +1,5 @@
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -8,9 +7,6 @@ import java.io.IOException;
 public class EditorController {
     private EditorModel model;
     private EditorView view;
-    private ActionListener actionOpenListener;
-    private ActionListener actionNewListener;
-    private ActionListener actionSaveListener;
 
     public EditorController(EditorModel model, EditorView view){
         this.model = model;
@@ -18,7 +14,15 @@ public class EditorController {
     }
 
     public void control(){
-        actionOpenListener = new ActionListener() {
+
+        view.getNewButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                NewFrame newFrame = new NewFrame();
+            }
+        });
+        
+        view.getOpenButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 JFileChooser fileChooser = new JFileChooser();
                 int returnVal = fileChooser.showOpenDialog(view);
@@ -29,16 +33,9 @@ public class EditorController {
                     }
                 }
             }
-        };
+        });
 
-        actionNewListener = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                NewFrame newFrame = new NewFrame();
-            }
-        };
-
-        actionSaveListener = new ActionListener() {
+        view.getSaveButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 JFileChooser fileChooser = new JFileChooser();
@@ -57,10 +54,14 @@ public class EditorController {
                     }
                 }
             }
-        };
+        });
 
-        view.getOpenButton().addActionListener(actionOpenListener);
-        view.getNewButton().addActionListener(actionNewListener);
-        view.getSaveButton().addActionListener(actionSaveListener);
+        view.getMap().addMouseListener (new MouseAdapter() {
+            @Override
+            public void mouseClicked (MouseEvent e) {
+                JOptionPane.showMessageDialog(
+                        e.getComponent (), "X: " + e.getX () + ", Y: " + e.getY ());
+            }
+        });
     }
 }
