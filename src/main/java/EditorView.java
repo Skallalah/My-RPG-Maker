@@ -65,6 +65,7 @@ public class EditorView extends JFrame {
         add(toolBar, BorderLayout.NORTH);
 
         SpritesPanel spritesPanel = new SpritesPanel(new Dimension(300, 500));
+        spritesPanel.setBackground(Color.WHITE);
         JScrollPane topLeftPanel = new JScrollPane(spritesPanel);
 
         MapsPanel mapsPanel = new MapsPanel(new DefaultMutableTreeNode("Maps"), new Dimension(300, 400));

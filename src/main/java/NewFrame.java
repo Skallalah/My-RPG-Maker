@@ -22,7 +22,6 @@ public class NewFrame extends JFrame {
         textField.setColumns(10);
         add(textField);
 
-
         setVisible(true);
     }
 }
