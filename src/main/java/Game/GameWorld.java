@@ -1,10 +1,15 @@
+package Game;
+
+import Game.GameMap;
+import Game.GameScript;
+
 import java.util.Hashtable;
 
 /**
  * Created by skallalah on 05/05/17.
  */
-public class World {
-    public World(String name) {
+public class GameWorld {
+    public GameWorld(String name) {
         maps_ = new Hashtable<>();
         scripts_ = new Hashtable<>();
         name_ = name;

@@ -1,10 +1,12 @@
+import Game.GameMap;
+import Game.GameWorld;
 import com.google.gson.Gson;
 
 public class Main {
     public static void main(String[] args)
     {
         Gson json = new Gson();
-        World test = new World("Xar'tsaroth");
+        GameWorld test = new GameWorld("Xar'tsaroth");
         GameMap map1 = new GameMap("Map1", 10, 10, "");
         test.addMap(map1);
         GameMap map2 = new GameMap("Map2", 10, 10, "");

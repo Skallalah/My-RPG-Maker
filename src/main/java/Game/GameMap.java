@@ -1,3 +1,6 @@
+package Game;
+
+import java.util.Hashtable;
 import java.util.Vector;
 
 /**
@@ -32,6 +35,10 @@ public class GameMap {
         return objects_.get(index);
     }
 
+    public void addObject(GameObject object) {
+        objects_.add(object);
+    }
+
     public String getName() {
         return name_;
     }
@@ -40,6 +47,7 @@ public class GameMap {
         this.name_ = name;
     }
 
+    // Map modification of tiles
     public boolean isWalkable(int x, int y) {
         return map_.get(y).get(x).isWalkable();
     }
@@ -59,6 +67,7 @@ public class GameMap {
     private String name_;
     private int width_;
     private int height_;
+    private Integer id_objects_;
     private Vector<GameObject> objects_;
     private Vector<Vector<Tile>> map_;
 
