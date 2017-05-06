@@ -11,4 +11,5 @@ public class GameCharacter {
     private String name_;
     private String path_img_;
     private String path_img_face_; // For combat and dialogue
+    private String test;
 }
