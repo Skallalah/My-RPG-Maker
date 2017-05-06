@@ -16,13 +16,13 @@ public class EditorModel {
         NewFrame newFrame = new NewFrame();
     }
 
-    public void openAction(EditorView view, EditorModel model) {
+    public void openAction(EditorView view) {
         JFileChooser fileChooser = new JFileChooser();
         int returnVal = fileChooser.showOpenDialog(view);
         if(returnVal == JFileChooser.APPROVE_OPTION) {
             File[] files = fileChooser.getSelectedFiles();
             for(int i = 0; i < files.length; i++) {
-                model.openFile(files[i]);
+                openFile(files[i]);
             }
         }
     }

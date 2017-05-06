@@ -24,7 +24,7 @@ public class EditorController {
 
         view.getOpenButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
-                model.openAction(view, model);
+                model.openAction(view);
             }
         });
 
