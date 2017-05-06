@@ -7,7 +7,6 @@ public class EditorView extends JFrame {
     JButton newButton;
     JButton openButton;
     JButton saveButton;
-    JTabbedPane rightPanel;
 
     public EditorView() {
         setTitle("MyRPGMaker");
@@ -64,9 +63,12 @@ public class EditorView extends JFrame {
         toolBar.add(playButton);
         add(toolBar, BorderLayout.NORTH);
 
-        SpritesPanel spritesPanel = new SpritesPanel(new Dimension(300, 500));
-        spritesPanel.setBackground(Color.WHITE);
-        JScrollPane topLeftPanel = new JScrollPane(spritesPanel);
+        SpritesPanelModel spritesPanelModel = new SpritesPanelModel();
+        SpritesPanelView spritesPanelView = new SpritesPanelView(new Dimension(300, 500));
+        SpritesPanelController spritesPanelController = new SpritesPanelController(spritesPanelModel, spritesPanelView);
+        spritesPanelController.control();
+        spritesPanelView.setBackground(Color.WHITE);
+        JScrollPane topLeftPanel = new JScrollPane(spritesPanelView);
 
         MapsPanel mapsPanel = new MapsPanel(new DefaultMutableTreeNode("Maps"), new Dimension(300, 400));
         JScrollPane bottomLeftPanel = new JScrollPane(mapsPanel);
@@ -74,9 +76,12 @@ public class EditorView extends JFrame {
 
         JSplitPane leftPanel = new JSplitPane(JSplitPane.VERTICAL_SPLIT, topLeftPanel, bottomLeftPanel);
 
-        rightPanel = new JTabbedPane();
-        MapPanel mapPanel = new MapPanel("resources/sprites/backgroundTile/grass.png", 200, 200);
-        JScrollPane map = new JScrollPane(mapPanel);
+        JTabbedPane rightPanel = new JTabbedPane();
+        MapPanelModel mapPanelModel = new MapPanelModel();
+        MapPanelView mapPanelView = new MapPanelView("resources/sprites/backgroundTile/grass.png", 200, 200);
+        MapPanelController mapPanelController = new MapPanelController(mapPanelModel, mapPanelView);
+        mapPanelController.control();
+        JScrollPane map = new JScrollPane(mapPanelView);
         map.setPreferredSize(new Dimension(0,0));
         rightPanel.addTab("Map 1", map);
 
@@ -100,10 +105,6 @@ public class EditorView extends JFrame {
     }
     public JButton getSaveButton() {
         return saveButton;
-    }
-
-    public Component getMap() {
-        return rightPanel.getSelectedComponent();
     }
 
 }

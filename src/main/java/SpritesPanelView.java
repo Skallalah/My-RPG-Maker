@@ -8,11 +8,11 @@ import java.util.ArrayList;
 
 import static java.lang.Integer.max;
 
-public class SpritesPanel extends JPanel {
+public class SpritesPanelView extends JPanel {
     ArrayList<BufferedImage> images;
     Dimension dimension;
 
-    public SpritesPanel(Dimension dimension){
+    public SpritesPanelView(Dimension dimension){
         setDoubleBuffered(true);
         this.dimension = dimension;
         setPreferredSize(dimension);

@@ -34,13 +34,6 @@ public class EditorController {
                 model.saveAction(view);
             }
         });
-
-        view.getMap().addMouseListener (new MouseAdapter() {
-            @Override
-            public void mouseClicked (MouseEvent e) {
-                JOptionPane.showMessageDialog(
-                        e.getComponent (), "X: " + e.getX () + ", Y: " + e.getY ());
-            }
-        });
+        
     }
 }

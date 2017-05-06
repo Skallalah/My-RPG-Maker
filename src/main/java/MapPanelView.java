@@ -7,13 +7,13 @@ import java.io.IOException;
 
 import static java.lang.Integer.max;
 
-public class MapPanel extends JPanel {
+public class MapPanelView extends JPanel {
     BufferedImage defaultTile;
 
     int width, height;
     boolean gridDisplay;
 
-    public MapPanel(String defaultTilePath, int width, int height) {
+    public MapPanelView(String defaultTilePath, int width, int height) {
         setBackground(Color.black);
         setPreferredSize(new Dimension(width * 16, height * 16));
 
