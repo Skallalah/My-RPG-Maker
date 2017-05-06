@@ -11,6 +11,7 @@ public class MapPanel extends JPanel {
     BufferedImage defaultTile;
 
     int width, height;
+    boolean gridDisplay;
 
     public MapPanel(String defaultTilePath, int width, int height) {
         setBackground(Color.black);
@@ -18,6 +19,7 @@ public class MapPanel extends JPanel {
 
         this.width = width;
         this.height = height;
+        gridDisplay = true;
 
         try {
             defaultTile = ImageIO.read(new File(defaultTilePath));
@@ -26,18 +28,25 @@ public class MapPanel extends JPanel {
         }
     }
 
+    public void toggleGridDisplay() {
+        gridDisplay = !gridDisplay;
+    }
+
     public void paintComponent(Graphics g){
         super.paintComponent(g);
 
-        int x = 2;
-        int y = 2;
+        int x = (gridDisplay ? 1 : 0);
+        int y = x;
+
+        int offset = 16 + (gridDisplay ? 1 : 0);
+
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 g.drawImage(defaultTile, x, y, null);
-                x += 17;
+                x += offset;
             }
-            x = 2;
-            y += 17;
+            x = (gridDisplay ? 1 : 0);
+            y += offset;
         }
     }
 }
