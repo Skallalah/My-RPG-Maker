@@ -34,7 +34,7 @@ public class SpritesPanelView extends JPanel {
                     // MULTIPLE OF 16
                     if (img.getHeight() % 16 != 0 || img.getWidth() % 16 != 0)
                         throw new Exception();
-                    // CATCH IF NOT AN IMAGE
+                    // CATCH IF IT IS NOT AN IMAGE
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
