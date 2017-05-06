@@ -31,6 +31,18 @@ public class EditorView extends JFrame {
         editMenu.add(redoItem);
         menuBar.add(editMenu);
 
+        JMenu launchMenu = new JMenu("Game");
+        JMenuItem launchItem = new JMenuItem("Launch");
+        launchItem.add(launchMenu);
+        menuBar.add(launchMenu);
+
+        JMenu helpMenu = new JMenu("Help");
+        JMenuItem commandsItem = new JMenuItem("Commands");
+        JMenuItem moreItem = new JMenuItem("More");
+        helpMenu.add(commandsItem);
+        helpMenu.add(moreItem);
+        menuBar.add(helpMenu);
+        
         JToolBar toolBar = new JToolBar();
         toolBar.setFloatable(false);
         toolBar.setLayout(new BoxLayout(toolBar, BoxLayout.X_AXIS));
