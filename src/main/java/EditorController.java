@@ -35,5 +35,36 @@ public class EditorController {
             }
         });
 
+      /*  view.getWalkableButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                model.walkAction(view);
+            }
+        });
+        */
+
+        view.getWalkableButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                model.setwalkAction(view);
+            }
+        });
+
+        view.getNotwalkableButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                model.setnotwalkAction(view);
+            }
+        });
+
+     /*   view.getNotwalkableButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                model.walkAction(view);
+            }
+        });
+        */
+
+
     }
 }

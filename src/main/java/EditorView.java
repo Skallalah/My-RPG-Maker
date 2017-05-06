@@ -7,6 +7,8 @@ public class EditorView extends JFrame {
     JButton newButton;
     JButton openButton;
     JButton saveButton;
+    JButton walkableButton;
+    JButton notwalkableButton;
 
     public EditorView() {
         setTitle("MyRPGMaker");
@@ -73,6 +75,13 @@ public class EditorView extends JFrame {
         ImageIcon play_b = getIcon("play.png");
         JButton playButton = new JButton(play_b);
         toolBar.add(playButton);
+        ImageIcon walkable_b = getIcon("walkable.png");
+        walkableButton = new JButton(walkable_b);
+        toolBar.add(walkableButton);
+        ImageIcon notwalkable_b = getIcon("notwalkable.png");
+        notwalkableButton = new JButton(notwalkable_b);
+        toolBar.add(notwalkableButton);
+
         add(toolBar, BorderLayout.NORTH);
 
         SpritesPanelModel spritesPanelModel = new SpritesPanelModel();
@@ -115,8 +124,8 @@ public class EditorView extends JFrame {
     public JButton getOpenButton() {
         return openButton;
     }
-    public JButton getSaveButton() {
-        return saveButton;
-    }
+    public JButton getSaveButton() { return saveButton; }
+    public JButton getWalkableButton() { return walkableButton; }
+    public JButton getNotwalkableButton() { return notwalkableButton; }
 
 }

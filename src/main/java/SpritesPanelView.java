@@ -17,15 +17,24 @@ public class SpritesPanelView extends JPanel {
         this.dimension = dimension;
         setPreferredSize(dimension);
         images = new ArrayList<BufferedImage>();
-        loadSprites("resources/sprites");
+        try {
+            loadSprites("resources/sprites");
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
-    private void loadSprites(String path) {
+    private void loadSprites(String path) throws Exception {
         File folder = new File(path);
         for(File fileEntry : folder.listFiles())
             if (!fileEntry.isDirectory()) {
                 try {
                     images.add(ImageIO.read(fileEntry));
+                    BufferedImage img = images.get(images.size() - 1);
+                    // MULTIPLE OF 16
+                    if (img.getHeight() % 16 != 0 || img.getWidth() % 16 != 0)
+                        throw new Exception();
+                    // CATCH IF NOT AN IMAGE
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

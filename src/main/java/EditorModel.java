@@ -1,9 +1,13 @@
 import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
 public class EditorModel {
+    boolean walkable = true;
+    int check = 0;
+
     public EditorModel() {
 
     }
@@ -44,4 +48,42 @@ public class EditorModel {
             }
         }
     }
+
+
+    /*public void walkAction(EditorView view) {
+
+    }*/
+
+
+
+    public void setwalkAction(EditorView view) {
+        if (check == 0) {
+            view.walkableButton.setEnabled(true);
+            view.notwalkableButton.setEnabled(false);
+            view.walkableButton.setOpaque(true);
+            check++;
+        }
+        else {
+            check = 0;
+            view.walkableButton.setOpaque(false);
+            view.walkableButton.setEnabled(true);
+            view.notwalkableButton.setEnabled(true);
+        }
+    }
+
+    public void setnotwalkAction(EditorView view) {
+        if (check == 0) {
+            view.walkableButton.setEnabled(false);
+            view.notwalkableButton.setEnabled(true);
+            view.walkableButton.setOpaque(true);
+            check++;
+        }
+        else {
+            check = 0;
+            view.walkableButton.setOpaque(false);
+            view.walkableButton.setEnabled(true);
+            view.notwalkableButton.setEnabled(true);
+        }
+    }
+
 }
