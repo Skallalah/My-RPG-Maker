@@ -1,8 +1,6 @@
-import javax.swing.*;
+package EditorWindow;
+
 import java.awt.event.*;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 
 public class EditorController {
     private EditorModel model;

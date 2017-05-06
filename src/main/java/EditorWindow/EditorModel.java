@@ -1,5 +1,7 @@
+package EditorWindow;
+
 import javax.swing.*;
-import java.awt.*;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -50,7 +52,7 @@ public class EditorModel {
     }
 
 
-    /*public void walkAction(EditorView view) {
+    /*public void walkAction(EditorWindow.EditorView view) {
 
     }*/
 

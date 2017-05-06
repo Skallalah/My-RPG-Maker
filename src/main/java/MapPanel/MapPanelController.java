@@ -1,12 +1,14 @@
+package MapPanel;
+
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class SpritesPanelController {
-    private SpritesPanelModel model;
-    private SpritesPanelView view;
+public class MapPanelController {
+    private MapPanelModel model;
+    private MapPanelView view;
 
-    public SpritesPanelController(SpritesPanelModel model, SpritesPanelView view) {
+    public MapPanelController(MapPanelModel model, MapPanelView view) {
         this.model = model;
         this.view = view;
     }

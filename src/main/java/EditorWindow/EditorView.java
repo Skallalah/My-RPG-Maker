@@ -1,6 +1,10 @@
+package EditorWindow;
+
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
+import MapPanel.*;
+import SpritesPanel.*;
 
 public class EditorView extends JFrame {
 

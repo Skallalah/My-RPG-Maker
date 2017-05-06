@@ -1,3 +1,5 @@
+package EditorWindow;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
