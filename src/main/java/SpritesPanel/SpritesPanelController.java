@@ -17,8 +17,7 @@ public class SpritesPanelController {
         view.addMouseListener (new MouseAdapter() {
             @Override
             public void mouseClicked (MouseEvent e) {
-                JOptionPane.showMessageDialog(
-                        e.getComponent (), "X: " + e.getX () + ", Y: " + e.getY ());
+                model.detectSprite(e.getX(), e.getY(), view);
             }
         });
     }

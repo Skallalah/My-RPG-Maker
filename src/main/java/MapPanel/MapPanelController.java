@@ -17,8 +17,7 @@ public class MapPanelController {
         view.addMouseListener (new MouseAdapter() {
             @Override
             public void mouseClicked (MouseEvent e) {
-                JOptionPane.showMessageDialog(
-                        e.getComponent (), "X: " + e.getX () + ", Y: " + e.getY ());
+                model.addObject(e.getX()/16, e.getY()/16);
             }
         });
     }
