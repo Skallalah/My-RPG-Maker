@@ -72,11 +72,12 @@ public class EditorView extends JFrame {
 
         JSplitPane leftPanel = new JSplitPane(JSplitPane.VERTICAL_SPLIT, topLeftPanel, bottomLeftPanel);
 
-        JTabbedPane tabbedPane = new JTabbedPane();
-        MapPanel mapPanel = new MapPanel("resources/sprites/backgroundTile/grass.png");
-        tabbedPane.addTab("Map 1", new JScrollPane(mapPanel));
-        tabbedPane.addTab("Map 2", new JPanel());
-        JScrollPane rightPanel = new JScrollPane(tabbedPane);
+        JTabbedPane rightPanel = new JTabbedPane();
+        MapPanel mapPanel = new MapPanel("resources/sprites/backgroundTile/grass.png", 200, 200);
+        JScrollPane map = new JScrollPane(mapPanel);
+        map.setPreferredSize(new Dimension(0,0));
+        rightPanel.addTab("Map 1", map);
+        rightPanel.addTab("Map 2", new JPanel());
 
         JSplitPane splitPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPanel, rightPanel);
         add(splitPanel);

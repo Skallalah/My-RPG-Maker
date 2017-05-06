@@ -10,8 +10,15 @@ import static java.lang.Integer.max;
 public class MapPanel extends JPanel {
     BufferedImage defaultTile;
 
-    public MapPanel(String defaultTilePath) {
+    int width, height;
+
+    public MapPanel(String defaultTilePath, int width, int height) {
         setBackground(Color.black);
+        setPreferredSize(new Dimension(width * 16, height * 16));
+
+        this.width = width;
+        this.height = height;
+
         try {
             defaultTile = ImageIO.read(new File(defaultTilePath));
         } catch (IOException e) {
@@ -21,12 +28,16 @@ public class MapPanel extends JPanel {
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
+
         int x = 2;
         int y = 2;
-        for (;y < 900; y += 17) {
-            for (; x < 300; x += 17)
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
                 g.drawImage(defaultTile, x, y, null);
+                x += 17;
+            }
             x = 2;
+            y += 17;
         }
     }
 }
