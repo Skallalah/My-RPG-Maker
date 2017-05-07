@@ -1,5 +1,7 @@
 package SpritesPanel;
 
+import java.awt.image.BufferedImage;
+
 import SpriteResources.SpriteResources;
 
 public class SpritesPanelModel {
@@ -7,7 +9,8 @@ public class SpritesPanelModel {
 
     }
 
-    public void setAsSelected(int selected) {
-        SpriteResources.selectedIndex = selected;
+    public void setAsSelected(String selectedSprite) {
+        SpriteResources.selectedSprite = selectedSprite;
+        System.out.println(selectedSprite);
     }
 }

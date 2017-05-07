@@ -26,7 +26,7 @@ public class SpritesPanelController {
         });
     }
 
-    public int detectSelectedSprite(int clickX, int clickY) {
+    public String detectSelectedSprite(int clickX, int clickY) {
         int x = 0;
         int y = 0;
         int maxy = 0;
@@ -37,11 +37,11 @@ public class SpritesPanelController {
             }
 
             if (clickX >= x && clickX <= x + img.getWidth() && clickY >= y && clickY <= y + img.getHeight())
-                return SpriteResources.images.indexOf(img);
+                return SpriteResources.imageToPath.get(img);
 
             x += img.getWidth() + 16;
             maxy = max(maxy, img.getHeight());
         }
-        return -1;
+        return null;
     }
 }
