@@ -90,7 +90,7 @@ public class EditorView extends JFrame {
 
         add(toolBar, BorderLayout.NORTH);
 
-        SpritesPanelModel spritesPanelModel = new SpritesPanelModel();
+        SpritesPanelModel spritesPanelModel = new SpritesPanelModel(this);
         SpritesPanelView spritesPanelView = new SpritesPanelView(new Dimension(300, 500));
         SpritesPanelController spritesPanelController = new SpritesPanelController(spritesPanelModel, spritesPanelView);
         spritesPanelController.control();

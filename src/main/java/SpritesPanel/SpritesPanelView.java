@@ -4,7 +4,6 @@ import SpriteResources.SpriteResources;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.awt.image.ImageObserver;
 
 import static java.lang.Integer.max;
 
@@ -20,8 +19,11 @@ public class SpritesPanelView extends JPanel {
         } catch (Exception e){
             e.printStackTrace();
         }
+    }
 
-
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
         int x = 0;
         int y = 0;
         int maxy = 0;
@@ -30,13 +32,9 @@ public class SpritesPanelView extends JPanel {
                 x = 0;
                 y = maxy + 16;
             }
-            ImageIcon image = new ImageIcon(img);
-            JLabel label = new JLabel(image);
-            label.setLocation(x, y);
-            add(label);
+            g.drawImage(img, x, y, null);
             x += img.getWidth() + 16;
             maxy = max(maxy, img.getHeight());
         }
     }
-
 }
