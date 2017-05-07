@@ -20,7 +20,7 @@ public class SpritesPanelController {
     public void control() {
         view.addMouseListener (new MouseAdapter() {
             @Override
-            public void mouseClicked (MouseEvent e) {
+            public void mousePressed(MouseEvent e) {
                 model.setAsSelected(detectSelectedSprite(e.getX(), e.getY()));
             }
         });
