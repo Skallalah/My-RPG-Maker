@@ -3,6 +3,8 @@ package EditorWindow;
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
+
+import Game.GameMap;
 import MapPanel.*;
 import SpritesPanel.*;
 
@@ -102,8 +104,8 @@ public class EditorView extends JFrame {
         JSplitPane leftPanel = new JSplitPane(JSplitPane.VERTICAL_SPLIT, topLeftPanel, bottomLeftPanel);
 
         JTabbedPane rightPanel = new JTabbedPane();
-        MapPanelModel mapPanelModel = new MapPanelModel();
-        MapPanelView mapPanelView = new MapPanelView("resources/sprites/backgroundTile/grass.png", 200, 200);
+        MapPanelModel mapPanelModel = new MapPanelModel(new GameMap("Map1", 200, 200, "resources/sprites/backgroundTile/grass.png"));
+        MapPanelView mapPanelView = new MapPanelView(mapPanelModel);
         MapPanelController mapPanelController = new MapPanelController(mapPanelModel, mapPanelView);
         mapPanelController.control();
         JScrollPane map = new JScrollPane(mapPanelView);

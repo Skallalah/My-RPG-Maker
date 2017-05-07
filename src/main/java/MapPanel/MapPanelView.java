@@ -11,17 +11,22 @@ import java.io.IOException;
 import static java.lang.Integer.max;
 
 public class MapPanelView extends JPanel {
+    MapPanelModel mapPanelModel;
     BufferedImage defaultTile;
 
     int width, height;
+    String defaultTilePath;
     boolean gridDisplay;
 
-    public MapPanelView(String defaultTilePath, int width, int height) {
+    public MapPanelView(MapPanelModel mapPanelModel) {
         setBackground(Color.black);
         setPreferredSize(new Dimension(width * 16, height * 16));
 
-        this.width = width;
-        this.height = height;
+        this.mapPanelModel = mapPanelModel;
+
+        this.width = mapPanelModel.getWidth();
+        this.height = mapPanelModel.getHeight();
+        this.defaultTilePath = mapPanelModel.getDefaultTile();
         gridDisplay = true;
 
         try {
@@ -35,7 +40,7 @@ public class MapPanelView extends JPanel {
         gridDisplay = !gridDisplay;
     }
 
-    public void paintComponent(Graphics g){
+    public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
         int x = 0;
@@ -50,13 +55,16 @@ public class MapPanelView extends JPanel {
             y += 16;
         }
 
-        if (gridDisplay) {
-            Graphics2D g2 = (Graphics2D) g;
-            g2.setColor(new Color(0, 0, 0, 100));
-            for (x = 16; x < width * 16; x += 16)
-                g2.draw(new Line2D.Float(x, 0, x, height * 16));
-            for (y = 16; y < height * 16; y += 16)
-                g2.draw(new Line2D.Float(0, y, width * 16, y));
-        }
+        if (gridDisplay)
+            drawGrid(g);
+    }
+
+    private void drawGrid(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setColor(new Color(0, 0, 0, 100));
+        for (int x = 16; x < width * 16; x += 16)
+            g2.draw(new Line2D.Float(x, 0, x, height * 16));
+        for (int y = 16; y < height * 16; y += 16)
+            g2.draw(new Line2D.Float(0, y, width * 16, y));
     }
 }
