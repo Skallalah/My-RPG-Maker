@@ -12,10 +12,11 @@ public class GameWorld {
     public GameWorld(String name) {
         maps_ = new Hashtable<>();
         scripts_ = new Hashtable<>();
+        objects_ =  new Hashtable<>();
         name_ = name;
         id_map_ = 0;
         id_script_ = 0;
-        id_characters_ = 0;
+        id_objects_ = 0;
     }
 
     public String getName() {
@@ -50,13 +51,28 @@ public class GameWorld {
         scripts_.remove(id);
     }
 
+    //Object manipulation (by id)
+    public GameObject getObject(Integer id) {
+        return objects_.get(id);
+    }
+
+    public Integer addObject(GameObject object) {
+        objects_.put(id_objects_++, object);
+        return id_objects_;
+    }
+
+    public void deleteObject(Integer id) {
+        objects_.remove(id);
+    }
+
     private String name_;
 
     private Integer id_map_;
     private Integer id_script_;
-    private Integer id_characters_;
+    private Integer id_objects_;
 
     private Hashtable<Integer, GameMap> maps_;
     private Hashtable<Integer, GameScript> scripts_;
+    private Hashtable<Integer, GameObject> objects_;
 
 }

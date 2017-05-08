@@ -1,6 +1,5 @@
 package Game;
 
-import java.util.Hashtable;
 import java.util.Vector;
 
 /**
@@ -31,11 +30,11 @@ public class GameMap {
         return width_;
     }
 
-    public GameObject getObject(int index) {
+    public GameForeground getObject(int index) {
         return objects_.get(index);
     }
 
-    public void addObject(GameObject object) {
+    public void addObject(GameForeground object) {
         objects_.add(object);
     }
 
@@ -67,8 +66,7 @@ public class GameMap {
     private String name_;
     private int width_;
     private int height_;
-    private Integer id_objects_;
-    private Vector<GameObject> objects_;
+    private Vector<GameForeground> objects_;
     private Vector<Vector<Tile>> map_;
 
 }
