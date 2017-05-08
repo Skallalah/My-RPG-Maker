@@ -4,6 +4,7 @@ import java.awt.Cursor;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
 
 import EditorWindow.EditorView;
 import SpriteResources.SpriteResources;
@@ -19,7 +20,8 @@ public class SpritesPanelModel {
         SpriteResources.selectedSprite = selectedSprite;
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Image image = SpriteResources.pathToImage.get(selectedSprite);
-        Cursor c = toolkit.createCustomCursor(image , new Point(0, 0), "img");
+        BufferedImage img = SpriteResources.pathToImage.get(selectedSprite);
+        Cursor c = toolkit.createCustomCursor(image , new Point(img.getWidth() / 2, img.getHeight() / 2), "img");
         editorWindow.setCursor(c);
     }
 }

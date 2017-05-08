@@ -1,5 +1,7 @@
 package MapPanel;
 
+import javafx.scene.input.MouseDragEvent;
+
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -14,7 +16,7 @@ public class MapPanelController {
     }
 
     public void control() {
-        view.addMouseListener (new MouseAdapter() {
+        view.addMouseListener (new MouseAdapter(){
             @Override
             public void mousePressed(MouseEvent e) {
                 model.addObject(e.getX()/16, e.getY()/16);
@@ -22,6 +24,19 @@ public class MapPanelController {
                 view.revalidate();
                 view.repaint();
             }
+
         });
+
+        view.addMouseMotionListener(new MouseAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                model.addObject(e.getX()/16, e.getY()/16);
+                model.setDefaultCursor();
+                view.revalidate();
+                view.repaint();
+            }
+        });
+
+
     }
 }
