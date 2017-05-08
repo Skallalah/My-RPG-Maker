@@ -5,13 +5,15 @@ import javax.swing.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.concurrent.ExecutorService;
 
 public class EditorModel {
     boolean walkable = true;
     int check = 0;
+    ExecutorService executor;
 
-    public EditorModel() {
-
+    public EditorModel(ExecutorService executor) {
+        this.executor = executor;
     }
 
     public void openFile(File file) {
@@ -19,7 +21,9 @@ public class EditorModel {
     }
 
     public void newAction() {
-        NewFrame newFrame = new NewFrame();
+        executor.submit(() -> {
+            NewFrame newFrame = new NewFrame();
+        });
     }
 
     public void openAction(EditorView view) {

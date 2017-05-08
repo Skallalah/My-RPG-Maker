@@ -5,6 +5,9 @@ import Game.GameMap;
 import Game.GameWorld;
 import com.google.gson.Gson;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 public class Main {
     public static void main(String[] args)
     {
@@ -18,9 +21,25 @@ public class Main {
         test.getMap(1).setPathTile(0,0,"nouveau path");
         String jsonstring = json.toJson(test);
         System.out.println(jsonstring);
-        EditorModel editorModel = new EditorModel();
-        EditorView editorView = new EditorView();
-        EditorController editorController = new EditorController(editorModel, editorView);
-        editorController.control();
+
+        ExecutorService executor = Executors.newFixedThreadPool(8);
+        executor.submit(new runEditor(executor));
     }
+
+    static class runEditor implements Runnable {
+        ExecutorService executor;
+
+        runEditor(ExecutorService executor) {
+            this.executor = executor;
+        }
+
+        @Override
+        public void run() {
+            EditorModel editorModel = new EditorModel(executor);
+            EditorView editorView = new EditorView();
+            EditorController editorController = new EditorController(editorModel, editorView);
+            editorController.control();
+        }
+    }
+
 }
