@@ -1,3 +1,5 @@
+package MapPanel;
+
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -14,9 +16,11 @@ public class MapPanelController {
     public void control() {
         view.addMouseListener (new MouseAdapter() {
             @Override
-            public void mouseClicked (MouseEvent e) {
-                JOptionPane.showMessageDialog(
-                        e.getComponent (), "X: " + e.getX () + ", Y: " + e.getY ());
+            public void mousePressed(MouseEvent e) {
+                model.addObject(e.getX()/16, e.getY()/16);
+                model.setDefaultCursor();
+                view.revalidate();
+                view.repaint();
             }
         });
     }

@@ -59,8 +59,12 @@ public class GameMap {
         map_.get(y).get(x).setPath_img(path);
     }
 
-    public String setPathTile(int x, int y) {
+    public String getPathTile(int x, int y) {
         return map_.get(y).get(x).getPath_img();
+    }
+
+    public Vector<GameForeground> getObjects() {
+        return objects_;
     }
 
     private String name_;

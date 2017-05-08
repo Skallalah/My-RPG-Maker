@@ -14,6 +14,14 @@ public class GameObject {
         player_touch_ = null;
     }
 
+    public int getX() {
+        return pos_x_;
+    }
+
+    public int getY() {
+        return pos_y_;
+    }
+
     // Image modifications
     public String get_face() {
         return img_path_face_;

@@ -1,12 +1,20 @@
+package EditorWindow;
+
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
+
+import Game.GameMap;
+import MapPanel.*;
+import SpritesPanel.*;
 
 public class EditorView extends JFrame {
 
     JButton newButton;
     JButton openButton;
     JButton saveButton;
+    JButton walkableButton;
+    JButton notwalkableButton;
 
     public EditorView() {
         setTitle("MyRPGMaker");
@@ -73,9 +81,16 @@ public class EditorView extends JFrame {
         ImageIcon play_b = getIcon("play.png");
         JButton playButton = new JButton(play_b);
         toolBar.add(playButton);
+        ImageIcon walkable_b = getIcon("walkable.png");
+        walkableButton = new JButton(walkable_b);
+        toolBar.add(walkableButton);
+        ImageIcon notwalkable_b = getIcon("notwalkable.png");
+        notwalkableButton = new JButton(notwalkable_b);
+        toolBar.add(notwalkableButton);
+
         add(toolBar, BorderLayout.NORTH);
 
-        SpritesPanelModel spritesPanelModel = new SpritesPanelModel();
+        SpritesPanelModel spritesPanelModel = new SpritesPanelModel(this);
         SpritesPanelView spritesPanelView = new SpritesPanelView(new Dimension(300, 500));
         SpritesPanelController spritesPanelController = new SpritesPanelController(spritesPanelModel, spritesPanelView);
         spritesPanelController.control();
@@ -89,8 +104,8 @@ public class EditorView extends JFrame {
         JSplitPane leftPanel = new JSplitPane(JSplitPane.VERTICAL_SPLIT, topLeftPanel, bottomLeftPanel);
 
         JTabbedPane rightPanel = new JTabbedPane();
-        MapPanelModel mapPanelModel = new MapPanelModel();
-        MapPanelView mapPanelView = new MapPanelView("resources/sprites/backgroundTile/grass.png", 200, 200);
+        MapPanelModel mapPanelModel = new MapPanelModel(new GameMap("Map1", 200, 200, "resources/sprites/backgroundTile/grass.png"), this);
+        MapPanelView mapPanelView = new MapPanelView(mapPanelModel);
         MapPanelController mapPanelController = new MapPanelController(mapPanelModel, mapPanelView);
         mapPanelController.control();
         JScrollPane map = new JScrollPane(mapPanelView);
@@ -115,8 +130,8 @@ public class EditorView extends JFrame {
     public JButton getOpenButton() {
         return openButton;
     }
-    public JButton getSaveButton() {
-        return saveButton;
-    }
+    public JButton getSaveButton() { return saveButton; }
+    public JButton getWalkableButton() { return walkableButton; }
+    public JButton getNotwalkableButton() { return notwalkableButton; }
 
 }

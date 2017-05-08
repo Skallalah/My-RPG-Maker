@@ -6,6 +6,7 @@ My RPG Maker:
       - General Interface
       - Multithreading (ExecutorService ou SwingWorker)
       - Loading of sprites (type and error checking)
+          (Multiple 16, not image, type walkable)
       - World files design
       - World files save and open features
       - Basic tools for placement and selection
@@ -20,4 +21,3 @@ My RPG Maker:
     + Additionnal features
 
   DONE:
-

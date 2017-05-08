@@ -1,3 +1,6 @@
+import EditorWindow.EditorController;
+import EditorWindow.EditorModel;
+import EditorWindow.EditorView;
 import Game.GameMap;
 import Game.GameWorld;
 import com.google.gson.Gson;
