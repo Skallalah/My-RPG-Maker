@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+import Game.GameForeground;
 import Game.GameObject;
 import SpriteResources.SpriteResources;
 
@@ -60,7 +61,7 @@ public class MapPanelView extends JPanel {
     }
 
     private void drawObjects(Graphics g) {
-        for (GameObject obj : mapPanelModel.map.getObjects()) {
+        for (GameForeground obj : mapPanelModel.map.getObjects()) {
             String path = obj.getPath();
             BufferedImage image = SpriteResources.pathToImage.get(path);
             g.drawImage(image, obj.getX() * 16, obj.getY() * 16, null);
