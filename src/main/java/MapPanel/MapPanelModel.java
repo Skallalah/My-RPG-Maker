@@ -1,6 +1,7 @@
 package MapPanel;
 
 import java.awt.Cursor;
+import java.awt.image.BufferedImage;
 
 import EditorWindow.EditorView;
 import Game.GameForeground;
@@ -26,7 +27,9 @@ public class MapPanelModel {
     }
 
     public void addObject(int x, int y) {
-        map.addObject(new GameForeground(x, y, SpriteResources.selectedSprite));
+        BufferedImage img = SpriteResources.pathToImage.get(SpriteResources.selectedSprite);
+        //map.addObject(new GameObject(x, y, SpriteResources.selectedSprite));
+        map.addObject(new GameForeground((x - img.getWidth() / 32), (y - img.getHeight() / 32) , SpriteResources.selectedSprite));
     }
 
     public void setDefaultCursor() {
