@@ -24,10 +24,6 @@ public class MapPanelModel {
         return map.getHeight();
     }
 
-    public String getDefaultTile() {
-        return "resources/sprites/backgroundTile/grass.png";
-    }
-
     public void addObject(int x, int y) {
         map.addObject(new GameObject(x, y, SpriteResources.selectedSprite));
     }

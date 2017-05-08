@@ -15,10 +15,8 @@ import static java.lang.Integer.max;
 
 public class MapPanelView extends JPanel {
     MapPanelModel mapPanelModel;
-    BufferedImage defaultTile;
 
     int width, height;
-    String defaultTilePath;
     boolean gridDisplay;
 
     public MapPanelView(MapPanelModel mapPanelModel) {
@@ -29,14 +27,7 @@ public class MapPanelView extends JPanel {
 
         this.width = mapPanelModel.getWidth();
         this.height = mapPanelModel.getHeight();
-        this.defaultTilePath = mapPanelModel.getDefaultTile();
         gridDisplay = true;
-
-        try {
-            defaultTile = ImageIO.read(new File(defaultTilePath));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public void toggleGridDisplay() {
@@ -46,23 +37,26 @@ public class MapPanelView extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
+        drawTiles(g);
+        drawObjects(g);
+        if (gridDisplay)
+            drawGrid(g);
+    }
+
+    private void drawTiles(Graphics g) {
         int x = 0;
         int y = 0;
 
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                g.drawImage(defaultTile, x, y, null);
+                String path = mapPanelModel.map.getPathTile(i, j);
+                BufferedImage image = SpriteResources.pathToImage.get(path);
+                g.drawImage(image, x, y, null);
                 x += 16;
             }
             x = 0;
             y += 16;
         }
-
-        drawObjects(g);
-
-
-        if (gridDisplay)
-            drawGrid(g);
     }
 
     private void drawObjects(Graphics g) {

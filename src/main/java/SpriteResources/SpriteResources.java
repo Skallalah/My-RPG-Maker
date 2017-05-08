@@ -21,8 +21,9 @@ public class SpriteResources {
                 try {
                     BufferedImage img = ImageIO.read(fileEntry);
                     images.add(img);
-                    imageToPath.put(img, fileEntry.getPath());
-                    pathToImage.put(fileEntry.getPath(), img);
+                    String imagePath = fileEntry.getPath().replace("\\","/");
+                    imageToPath.put(img, imagePath);
+                    pathToImage.put(imagePath, img);
                     // MULTIPLE OF 16
                     if (img.getHeight() % 16 != 0 || img.getWidth() % 16 != 0)
                         throw new Exception();
