@@ -1,11 +1,7 @@
 package MapPanel;
 
-import javafx.scene.input.MouseDragEvent;
-
-import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.concurrent.ExecutorService;
 
 public class MapPanelController {
     private MapPanelModel model;
