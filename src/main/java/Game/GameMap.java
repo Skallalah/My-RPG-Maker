@@ -64,6 +64,10 @@ public class GameMap {
         return map_.get(y).get(x).getPath_img();
     }
 
+    public Vector<GameObject> getObjects() {
+        return objects_;
+    }
+
     private String name_;
     private int width_;
     private int height_;

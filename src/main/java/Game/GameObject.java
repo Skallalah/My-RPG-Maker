@@ -10,6 +10,18 @@ public class GameObject {
         path_img_ = path;
     }
 
+    public int getX() {
+        return x_;
+    }
+
+    public int getY() {
+        return y_;
+    }
+
+    public String getPath() {
+        return path_img_;
+    }
+
     private int x_;
     private int y_;
     private String path_img_;

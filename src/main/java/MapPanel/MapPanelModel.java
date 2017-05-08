@@ -1,13 +1,19 @@
 package MapPanel;
 
+import java.awt.Cursor;
+
+import EditorWindow.EditorView;
 import Game.GameMap;
 import Game.GameObject;
+import SpriteResources.SpriteResources;
 
 public class MapPanelModel {
-    GameMap map;
+    public GameMap map;
+    EditorView editorWindow;
 
-    public MapPanelModel(GameMap map) {
+    public MapPanelModel(GameMap map, EditorView editorWindow) {
         this.map = map;
+        this.editorWindow = editorWindow;
     }
 
     public int getWidth() {
@@ -23,6 +29,10 @@ public class MapPanelModel {
     }
 
     public void addObject(int x, int y) {
-        map.addObject(new GameObject(x, y, ""));
+        map.addObject(new GameObject(x, y, SpriteResources.selectedSprite));
+    }
+
+    public void setDefaultCursor() {
+        editorWindow.setCursor(Cursor.getDefaultCursor());
     }
 }

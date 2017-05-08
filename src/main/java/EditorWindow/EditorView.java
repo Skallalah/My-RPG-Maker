@@ -104,7 +104,7 @@ public class EditorView extends JFrame {
         JSplitPane leftPanel = new JSplitPane(JSplitPane.VERTICAL_SPLIT, topLeftPanel, bottomLeftPanel);
 
         JTabbedPane rightPanel = new JTabbedPane();
-        MapPanelModel mapPanelModel = new MapPanelModel(new GameMap("Map1", 200, 200, "resources/sprites/backgroundTile/grass.png"));
+        MapPanelModel mapPanelModel = new MapPanelModel(new GameMap("Map1", 200, 200, "resources/sprites/backgroundTile/grass.png"), this);
         MapPanelView mapPanelView = new MapPanelView(mapPanelModel);
         MapPanelController mapPanelController = new MapPanelController(mapPanelModel, mapPanelView);
         mapPanelController.control();

@@ -20,6 +20,6 @@ public class SpritesPanelModel {
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Image image = SpriteResources.pathToImage.get(selectedSprite);
         Cursor c = toolkit.createCustomCursor(image , new Point(0, 0), "img");
-        editorWindow.setCursor (c);
+        editorWindow.setCursor(c);
     }
 }

@@ -8,6 +8,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+import Game.GameObject;
+import SpriteResources.SpriteResources;
+
 import static java.lang.Integer.max;
 
 public class MapPanelView extends JPanel {
@@ -55,8 +58,19 @@ public class MapPanelView extends JPanel {
             y += 16;
         }
 
+        drawObjects(g);
+
+
         if (gridDisplay)
             drawGrid(g);
+    }
+
+    private void drawObjects(Graphics g) {
+        for (GameObject obj : mapPanelModel.map.getObjects()) {
+            String path = obj.getPath();
+            BufferedImage image = SpriteResources.pathToImage.get(path);
+            g.drawImage(image, obj.getX() * 16, obj.getY() * 16, null);
+        }
     }
 
     private void drawGrid(Graphics g) {

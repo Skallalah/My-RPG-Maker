@@ -16,8 +16,11 @@ public class MapPanelController {
     public void control() {
         view.addMouseListener (new MouseAdapter() {
             @Override
-            public void mouseClicked (MouseEvent e) {
+            public void mousePressed(MouseEvent e) {
                 model.addObject(e.getX()/16, e.getY()/16);
+                model.setDefaultCursor();
+                view.revalidate();
+                view.repaint();
             }
         });
     }
