@@ -41,12 +41,12 @@ public class GameObject {
 
 
     // Script getter/setter
-    public Integer get_interaction() {
-        return action_button_;
+    public GameScript get_interaction(GameWorld world) {
+        return world.getScript(action_button_);
     }
 
-    public Integer get_touch() {
-        return player_touch_;
+    public GameScript get_touch(GameWorld world) {
+        return world.getScript(player_touch_);
     }
 
     public void set_interaction(Integer id_script) {

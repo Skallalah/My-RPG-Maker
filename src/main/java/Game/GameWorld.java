@@ -13,10 +13,12 @@ public class GameWorld {
         maps_ = new Hashtable<>();
         scripts_ = new Hashtable<>();
         objects_ =  new Hashtable<>();
+        variables_ = new Hashtable<>();
         name_ = name;
         id_map_ = 0;
         id_script_ = 0;
         id_objects_ = 0;
+        id_variables_ = 0;
     }
 
     public String getName() {
@@ -65,14 +67,30 @@ public class GameWorld {
         objects_.remove(id);
     }
 
+    //Variable manipulation (by id)
+    public GameVariable getVariable(Integer id) {
+        return variables_.get(id);
+    }
+
+    public Integer addVariable(GameVariable variable) {
+        variables_.put(id_variables_++, variable);
+        return id_variables_;
+    }
+
+    public void deleteVariable(Integer id) {
+        variables_.remove(id);
+    }
+
     private String name_;
 
     private Integer id_map_;
     private Integer id_script_;
     private Integer id_objects_;
+    private Integer id_variables_;
 
     private Hashtable<Integer, GameMap> maps_;
     private Hashtable<Integer, GameScript> scripts_;
     private Hashtable<Integer, GameObject> objects_;
+    private Hashtable<Integer, GameVariable> variables_;
 
 }

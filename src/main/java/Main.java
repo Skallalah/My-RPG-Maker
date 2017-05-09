@@ -11,7 +11,7 @@ import java.util.concurrent.Executors;
 public class Main {
     public static void main(String[] args)
     {
-        Gson json = new Gson();
+        /*Gson json = new Gson();
         GameWorld test = new GameWorld("Xar'tsaroth");
         GameMap map1 = new GameMap("Map1", 10, 10, "");
         test.addMap(map1);
@@ -20,7 +20,7 @@ public class Main {
         test.deleteMap(0);
         test.getMap(1).setPathTile(0,0,"nouveau path");
         String jsonstring = json.toJson(test);
-        System.out.println(jsonstring);
+        System.out.println(jsonstring);*/
 
         ExecutorService executor = Executors.newFixedThreadPool(8);
         executor.submit(new runEditor(executor));
