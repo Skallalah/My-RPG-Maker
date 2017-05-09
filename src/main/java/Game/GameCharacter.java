@@ -1,12 +1,16 @@
 package Game;
 
+import Game.CharacterPersonalization.GameClass;
+
 /**
  * Created by skallalah on 06/05/17.
  */
 public class GameCharacter {
-    public GameCharacter(String name, String sprite) {
+    public GameCharacter(String name, String sprite, GameClass gameclass) {
         name_ = name;
         path_img_sprite_ = sprite;
+        class_ = gameclass;
+        level_ = 1;
     }
 
     public void spawn_player(Integer map_id, Integer x, Integer y) {
@@ -85,9 +89,16 @@ public class GameCharacter {
         this.path_img_sprite_ = sprite;
     }
 
+    // Characteristics and personalization
+
+
     private String name_;
     private String path_img_sprite_;
     private Integer id_map_;
     private Integer pos_x_;
     private Integer pos_y_;
+
+    // Character information (class, stats, etc...)
+    private Integer level_;
+    private GameClass class_;
 }

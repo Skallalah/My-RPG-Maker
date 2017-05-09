@@ -1,6 +1,5 @@
 package Game.Events;
 
-import Game.GameDialogue;
 import Game.GameScript;
 import Game.GameWorld;
 

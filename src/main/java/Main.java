@@ -1,9 +1,7 @@
 import EditorWindow.EditorController;
 import EditorWindow.EditorModel;
 import EditorWindow.EditorView;
-import Game.GameMap;
-import Game.GameWorld;
-import com.google.gson.Gson;
+import Game.CharacterPersonalization.GameClass;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -21,7 +19,7 @@ public class Main {
         test.getMap(1).setPathTile(0,0,"nouveau path");
         String jsonstring = json.toJson(test);
         System.out.println(jsonstring);*/
-
+        GameClass cla = new GameClass("Barbarian");
         ExecutorService executor = Executors.newFixedThreadPool(8);
         executor.submit(new runEditor(executor));
     }
