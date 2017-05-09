@@ -25,6 +25,14 @@ public class GameWorld {
         return name_;
     }
 
+    public GameCharacter getCharacter() {
+        return character_;
+    }
+
+    public void setCharacter_(GameCharacter character) {
+        this.character_ = character;
+    }
+
     //Map manipulation (by id)
     public GameMap getMap(Integer id) {
         return maps_.get(id);
@@ -82,6 +90,8 @@ public class GameWorld {
     }
 
     private String name_;
+
+    private GameCharacter character_;
 
     private Integer id_map_;
     private Integer id_script_;
