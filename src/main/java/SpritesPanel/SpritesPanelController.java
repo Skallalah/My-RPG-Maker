@@ -1,10 +1,13 @@
 package SpritesPanel;
 
+import Common.Executor;
+import Common.Observer;
+import Common.SpriteResources;
+
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-
-import SpriteResources.SpriteResources;
 
 import static java.lang.Integer.max;
 
@@ -21,7 +24,11 @@ public class SpritesPanelController {
         view.addMouseListener (new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                model.setAsSelected(detectSelectedSprite(e.getX(), e.getY()));
+                Executor.executor.submit(() -> {
+                    SpriteResources.foregroundSprites = model.isForegroundSprite();
+                    SpriteResources.selectedSprite = detectSelectedSprite(e.getX(), e.getY());
+                    // SET CURSOR
+                });
             }
         });
     }
@@ -31,16 +38,18 @@ public class SpritesPanelController {
         int y = 0;
         int maxy = 0;
         for (BufferedImage img : SpriteResources.images) {
-            if (x + img.getWidth() > view.dimension.getWidth()) {
-                x = 0;
-                y = maxy + 16;
+            if (SpriteResources.imageToPath.get(img).startsWith(view.pathFilter)) {
+                if (x + img.getWidth() > view.dimension.getWidth()) {
+                    x = 0;
+                    y = maxy + 16;
+                }
+
+                if (clickX >= x && clickX <= x + img.getWidth() && clickY >= y && clickY <= y + img.getHeight())
+                    return SpriteResources.imageToPath.get(img);
+
+                x += img.getWidth() + 16;
+                maxy = max(maxy, img.getHeight());
             }
-
-            if (clickX >= x && clickX <= x + img.getWidth() && clickY >= y && clickY <= y + img.getHeight())
-                return SpriteResources.imageToPath.get(img);
-
-            x += img.getWidth() + 16;
-            maxy = max(maxy, img.getHeight());
         }
         return null;
     }

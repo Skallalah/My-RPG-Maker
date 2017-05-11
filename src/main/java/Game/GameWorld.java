@@ -38,6 +38,10 @@ public class GameWorld {
         return maps_.get(id);
     }
 
+    public Hashtable<Integer, GameMap> getMaps() {
+        return maps_;
+    }
+
     public Integer addMap(GameMap map) {
         maps_.put(id_map_++, map);
         return id_map_;

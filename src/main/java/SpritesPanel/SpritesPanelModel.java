@@ -1,26 +1,43 @@
 package SpritesPanel;
 
 import java.awt.Cursor;
-import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
+import Common.Executor;
+import Common.Observable;
+import Common.Observer;
+import Common.SpriteResources;
 import EditorWindow.EditorView;
-import SpriteResources.SpriteResources;
 
-public class SpritesPanelModel {
-    EditorView editorWindow;
+public class SpritesPanelModel implements Observable {
+    private ArrayList<Observer> observerList = new ArrayList<>();
 
-    public SpritesPanelModel(EditorView editorWindow) {
-        this.editorWindow = editorWindow;
+    private boolean foregroundSprites;
+
+    public SpritesPanelModel(boolean foregroundSprites) {
+        this.foregroundSprites = foregroundSprites;
     }
 
-    public void setAsSelected(String selectedSprite) {
-        SpriteResources.selectedSprite = selectedSprite;
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
-        BufferedImage img = SpriteResources.pathToImage.get(selectedSprite);
-        Cursor c = toolkit.createCustomCursor(img, new Point(img.getWidth() / 2, img.getHeight() / 2), "img");
-        editorWindow.setCursor(c);
+    public boolean isForegroundSprite() {
+        return foregroundSprites;
+    }
+
+    @Override
+    public void addObserver(Observer obs) {
+        observerList.add(obs);
+    }
+
+    @Override
+    public void notifyObserver(String str) {
+        for(Observer obs : observerList)
+            obs.update(str);
+    }
+
+    @Override
+    public void removeObserver() {
+        observerList = new ArrayList<>();
     }
 }

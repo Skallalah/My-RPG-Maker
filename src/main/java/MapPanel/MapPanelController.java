@@ -1,5 +1,8 @@
 package MapPanel;
 
+import Common.Executor;
+import Common.SpriteResources;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -16,10 +19,9 @@ public class MapPanelController {
         view.addMouseListener (new MouseAdapter(){
             @Override
             public void mousePressed(MouseEvent e) {
-                model.addObject(e.getX()/16, e.getY()/16);
-                model.setDefaultCursor();
-                view.revalidate();
-                view.repaint();
+                Executor.executor.submit(() -> {
+                    clickAction(e.getX()/16, e.getY()/16);
+                });
             }
 
         });
@@ -27,13 +29,17 @@ public class MapPanelController {
         view.addMouseMotionListener(new MouseAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
-                model.addObject(e.getX()/16, e.getY()/16);
-                model.setDefaultCursor();
-                view.revalidate();
-                view.repaint();
+                Executor.executor.submit(() -> {
+                    clickAction(e.getX()/16, e.getY()/16);
+                });
             }
         });
+    }
 
-
+    private void clickAction(int x, int y) {
+        if (SpriteResources.selectedSprite.equals("remove"))
+            model.removeObjects(x,y);
+        else
+            model.addObject(x, y);
     }
 }

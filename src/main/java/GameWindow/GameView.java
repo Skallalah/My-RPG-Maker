@@ -10,12 +10,19 @@ public class GameView extends JFrame {
         gameModel_ = model;
         setTitle(model.getWorld().getName());
         setSize(500, 400);
-        JPanel map_panel = new GameMapViewer(model);
+        gameMapViewer_ = new GameMapViewer(model);
+        JPanel map_panel = gameMapViewer_;
         add(map_panel);
+
         map_panel.repaint();
         setVisible(true);
     }
 
+    public void paintView() {
+        gameMapViewer_.repaint();
+    }
+
+    private GameMapViewer gameMapViewer_;
     private GameModel gameModel_;
 
 }
