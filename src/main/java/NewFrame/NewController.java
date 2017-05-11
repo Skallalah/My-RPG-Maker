@@ -7,36 +7,28 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-/**
- * Created by najjaj_k on 5/8/17.
- */
 public class NewController {
-    private NewView newView;
-    private NewModel newModel;
-    private EditorView view;
+    private NewView view;
+    private NewModel model;
 
-    public NewController(NewView newView, NewModel newModel, EditorView view){
-        this.newView = newView;
-        this.newModel = newModel;
+    public NewController(NewView view, NewModel model){
         this.view = view;
+        this.model = model;
     }
 
     public void control() {
-        System.out.println("Control");
-
-        newView.getSubmitbutton().addActionListener(new ActionListener() {
+        view.getSubmitbutton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                newModel.newSubmitAction(newView, view);
+                model.submitAction();
             }
         });
 
-        newView.getCancelbutton().addActionListener(new ActionListener() {
+        view.getCancelbutton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                newModel.newCancelAction(newView, view);
+                model.cancelAction();
             }
         });
-
     }
 }

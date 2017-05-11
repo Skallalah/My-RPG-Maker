@@ -10,15 +10,12 @@ import java.awt.image.BufferedImage;
 import static java.lang.Integer.max;
 
 public class SpritesPanelView extends JPanel implements Observer {
-    Dimension dimension;
     String pathFilter;
 
-    public SpritesPanelView(Dimension dimension, String pathFilter){
+    public SpritesPanelView(String pathFilter){
         setBackground(Color.WHITE);
         setDoubleBuffered(true);
-        this.dimension = dimension;
         this.pathFilter = pathFilter;
-        setPreferredSize(dimension);
     }
 
     @Override
@@ -29,7 +26,7 @@ public class SpritesPanelView extends JPanel implements Observer {
         int maxy = 0;
         for (BufferedImage img : SpriteResources.images) {
             if (SpriteResources.imageToPath.get(img).startsWith(pathFilter)) {
-                if (x + img.getWidth() > dimension.getWidth()) {
+                if (x + img.getWidth() > 300) {
                     x = 0;
                     y = maxy + 16;
                 }
@@ -38,7 +35,7 @@ public class SpritesPanelView extends JPanel implements Observer {
                 maxy = max(maxy, img.getHeight());
             }
         }
-        setPreferredSize(new Dimension(getWidth(), maxy + 100));
+        setPreferredSize(new Dimension(0, maxy + 100));
     }
 
     @Override

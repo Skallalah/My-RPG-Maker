@@ -1,29 +1,13 @@
 package EditorWindow;
 
-import Common.Executor;
 import Common.Observable;
 import Common.Observer;
-import Common.SpriteResources;
-import Game.GameMap;
 import Game.GameWorld;
-import GameWindow.GameController;
-import GameWindow.GameModel;
-import GameWindow.GameView;
-import MapPanel.MapPanelController;
-import MapPanel.MapPanelModel;
-import MapPanel.MapPanelView;
-import NewFrame.NewController;
-import NewFrame.NewModel;
-import NewFrame.NewView;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 
-import javax.swing.*;
-
-import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Hashtable;
 
 public class EditorModel implements Observable {
     private ArrayList<Observer> observerList = new ArrayList<>();

@@ -18,7 +18,6 @@ import SpritesPanel.*;
 import NewFrame.*;
 
 public class EditorView extends JFrame implements Observer {
-
     EditorModel model;
 
     JButton newButton;
@@ -33,8 +32,6 @@ public class EditorView extends JFrame implements Observer {
     JMenuItem openItem;
     JMenuItem saveItem;
     JMenuItem exitItem;
-    JTabbedPane rightPanel;
-
 
     public EditorView(EditorModel model) {
         this.model = model;
@@ -125,16 +122,18 @@ public class EditorView extends JFrame implements Observer {
         }
 
         SpritesPanelModel spritesPanelModel1 = new SpritesPanelModel(false);
-        SpritesPanelView spritesPanelView1 = new SpritesPanelView(new Dimension(280, 500), "resources/sprites/backgroundTile");
+        SpritesPanelView spritesPanelView1 = new SpritesPanelView("resources/sprites/backgroundTile");
         SpritesPanelController spritesPanelController1 = new SpritesPanelController(spritesPanelModel1, spritesPanelView1);
         spritesPanelController1.control();
         JScrollPane topLeftPanel1 = new JScrollPane(spritesPanelView1);
+        topLeftPanel1.setPreferredSize(new Dimension(320, 200));
 
         SpritesPanelModel spritesPanelModel2 = new SpritesPanelModel(true);
-        SpritesPanelView spritesPanelView2 = new SpritesPanelView(new Dimension(280, 500), "resources/sprites/foregroundObject");
+        SpritesPanelView spritesPanelView2 = new SpritesPanelView("resources/sprites/foregroundObject");
         SpritesPanelController spritesPanelController2 = new SpritesPanelController(spritesPanelModel2, spritesPanelView2);
         spritesPanelController2.control();
         JScrollPane topLeftPanel2 = new JScrollPane(spritesPanelView2);
+        topLeftPanel2.setPreferredSize(new Dimension(320, 200));
 
         JSplitPane topLeftPanel = new JSplitPane(JSplitPane.VERTICAL_SPLIT, topLeftPanel1, topLeftPanel2);
 
@@ -158,9 +157,9 @@ public class EditorView extends JFrame implements Observer {
         mapPanelController.control();
         JScrollPane map = new JScrollPane(mapPanelView);
         rightPanel.addTab("Map", map);
-        rightPanel.setPreferredSize(new Dimension(500, 850));
 
         JSplitPane splitPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPanel, rightPanel);
+        splitPanel.setResizeWeight(0.5);
         add(splitPanel);
 
         setJMenuBar(menuBar);
@@ -242,7 +241,7 @@ public class EditorView extends JFrame implements Observer {
     public JMenuItem getExitMenuItem() {
         return exitItem;
     }
-    public JTabbedPane getMapPanel() { return rightPanel; }
+    public static JTabbedPane getMapPanel() { return rightPanel; }
 
     @Override
     public void update(String str) {
@@ -266,4 +265,6 @@ public class EditorView extends JFrame implements Observer {
             setWalkableButtons(Walkable.NONE);
         }
     }
+
+    private static JTabbedPane rightPanel;
 }

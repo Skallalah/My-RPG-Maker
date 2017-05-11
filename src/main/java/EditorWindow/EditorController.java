@@ -135,9 +135,9 @@ public class EditorController {
 
     private void newAction() {
         Executor.executor.submit(() -> {
-            NewView newView = new NewView();
             NewModel newModel = new NewModel();
-            NewController newController = new NewController(newView, newModel, view);
+            NewView newView = new NewView(newModel);
+            NewController newController = new NewController(newView, newModel);
             newController.control();
         });
     }

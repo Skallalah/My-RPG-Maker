@@ -1,5 +1,13 @@
 package NewFrame;
 
+import Common.Observer;
+import EditorWindow.EditorModel;
+import EditorWindow.EditorView;
+import Game.GameMap;
+import MapPanel.MapPanelController;
+import MapPanel.MapPanelModel;
+import MapPanel.MapPanelView;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -10,11 +18,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-/**
- * Created by najjaj_k on 5/8/17.
- */
-public class NewView extends JFrame {
-    JFrame newFrame;
+public class NewView extends JFrame implements Observer {
+    NewModel model;
+
     JTextField titleField;
     JTextField widthField;
     JTextField heightField;
@@ -22,7 +28,10 @@ public class NewView extends JFrame {
     JButton cancelButton;
     BufferedImage img;
 
-    public NewView(){
+    public NewView(NewModel model){
+        this.model = model;
+        model.addObserver(this);
+
         File folder = new File("resources/icons/newpage.png");
 
         img = null;
@@ -33,18 +42,11 @@ public class NewView extends JFrame {
         }
         setTitle("New map");
         setSize(img.getWidth(),img.getHeight());
-       // setLayout(new BorderLayout());
 
         JPanel jpanel = background(new JPanel(), img, getSize());
 
-
-
         setLayout(new GridBagLayout());
         setContentPane(jpanel);
-        //setContentPane(new JLabel(new ImageIcon(img)));
-
-
-        //setLayout(new FlowLayout());
 
         GridLayout grid = new GridLayout(4,2);
         JPanel gridpanel = new JPanel(grid);
@@ -54,10 +56,7 @@ public class NewView extends JFrame {
 
         gridpanel.setLocation(getWidth(), getHeight());
         JLabel ltitle = new JLabel("Title :");
-       /* Font font = new Font(ltitle.getFont().getName(), Font.BOLD, ltitle.getFont().getSize());
-        ltitle.setFont(font);
-        ltitle.setSize(20,20);
-        */
+
         gridpanel.add(ltitle);
         titleField = new JTextField();
         titleField.setColumns(10);
@@ -80,8 +79,6 @@ public class NewView extends JFrame {
         gridpanel.add(submitButton);
         gridpanel.add(cancelButton);
 
-
-
         add(gridpanel);
         gridpanel.setVisible(true);
         setVisible(true);
@@ -100,23 +97,53 @@ public class NewView extends JFrame {
         return jpanel;
     }
 
+    public void newSubmitAction() {
+        String title = getJTitle().getText();
+        String width = getJwidth().getText();
+        String height = getJheight().getText();
+        if(!title.equals("") && !width.equals("") && !height.equals("")){
+            GameMap tmpMap = new GameMap(title, Integer.parseInt(width), Integer.parseInt(height), "resources/sprites/backgroundTile/grass.png");
+            EditorModel.getSelf().getCurrentWorld().addMap(tmpMap);
+            MapPanelModel mapPanelModel = new MapPanelModel(tmpMap);
+            MapPanelView mapPanelView = new MapPanelView(mapPanelModel);
+            MapPanelController mapPanelController = new MapPanelController(mapPanelModel, mapPanelView);
+            mapPanelController.control();
+            JScrollPane map = new JScrollPane(mapPanelView);
+            map.setPreferredSize(new Dimension(0,0));
+            EditorView.getMapPanel().add(title, map);
+        }
+        setVisible(false);
+        dispose();
+    }
+
+    public void newCancelAction() {
+        setVisible(false);
+        dispose();
+    }
+
     public JButton getSubmitbutton() {
         return submitButton;
     }
-
     public JButton getCancelbutton() {
         return cancelButton;
     }
     public JTextField getJTitle(){
         return titleField;
     }
-
     public JTextField getJwidth(){
         return widthField;
     }
-
     public JTextField getJheight(){
         return heightField;
     }
 
+    @Override
+    public void update(String str) {
+        if (str.equals("submit")) {
+            newSubmitAction();
+        }
+        else if (str.equals("cancel")) {
+            newCancelAction();
+        }
+    }
 }

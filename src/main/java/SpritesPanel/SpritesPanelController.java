@@ -39,7 +39,7 @@ public class SpritesPanelController {
         int maxy = 0;
         for (BufferedImage img : SpriteResources.images) {
             if (SpriteResources.imageToPath.get(img).startsWith(view.pathFilter)) {
-                if (x + img.getWidth() > view.dimension.getWidth()) {
+                if (x + img.getWidth() > 300) {
                     x = 0;
                     y = maxy + 16;
                 }
