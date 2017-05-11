@@ -35,7 +35,7 @@ public class MapPanelModel implements Observable {
             else
                 map.setPathTile(x, y, SpriteResources.selectedSprite);
         }
-        notifyObserver("Repaint");
+        notifyObserver("repaint");
     }
 
     public void removeObjects(int x, int y) {
@@ -53,7 +53,7 @@ public class MapPanelModel implements Observable {
             if (x >= ox && x <= ox + dx && y >= oy && y <= oy + dy)
                 objects.remove(obj);
         }
-        notifyObserver("Repaint");
+        notifyObserver("repaint");
     }
 
     @Override

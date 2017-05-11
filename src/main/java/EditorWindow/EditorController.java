@@ -52,7 +52,7 @@ public class EditorController {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 Executor.executor.submit(() -> {
-                    model.setWalkable(true);
+                    model.setWalkable(Walkable.WALKABLE);
                 });
             }
         });
@@ -61,7 +61,7 @@ public class EditorController {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 Executor.executor.submit(() -> {
-                    model.setWalkable(false);
+                    model.setWalkable(Walkable.NON_WALKABLE);
                 });
             }
         });

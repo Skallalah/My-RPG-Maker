@@ -30,11 +30,12 @@ public class EditorModel implements Observable {
 
     private static EditorModel self;
     private GameWorld current_world_;
-    private boolean walkable;
+    private Walkable walkable;
     private static boolean gridDisplay;
 
     public EditorModel() {
         gridDisplay = true;
+        walkable = Walkable.NONE;
         self = this;
     }
 
@@ -59,12 +60,9 @@ public class EditorModel implements Observable {
         JsonReader reader = null;
         try {
             reader = new JsonReader(new FileReader(path));
-            GameWorld openWorld = gson.fromJson(reader, GameWorld.class);
+            setCurrentWorld(gson.fromJson(reader, GameWorld.class));
             notifyObserver("removeAllTabs");
-            Hashtable<Integer, GameMap> maps = openWorld.getMaps();
-            for (GameMap map : maps.values()) {
-                addMap(map);
-            }
+            notifyObserver("addAllMaps");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -80,23 +78,20 @@ public class EditorModel implements Observable {
         }
     }
 
-    static private void addMap(GameMap map) {
-        MapPanelModel mapPanelModel = new MapPanelModel(map);
-        MapPanelView mapPanelView = new MapPanelView(mapPanelModel);
-        MapPanelController mapPanelController = new MapPanelController(mapPanelModel, mapPanelView);
-        mapPanelController.control();
-        JScrollPane map2 = new JScrollPane(mapPanelView);
-        map2.setPreferredSize(new Dimension(0,0));
-        // FIXME
-        //view.rightPanel.addTab(map.getName(), map2);
-    }
+    public void setWalkable(Walkable newWalkable) {
+        if (walkable == Walkable.NONE) {
+            if (newWalkable == Walkable.WALKABLE)
+                notifyObserver("walkable");
+            else if (newWalkable == Walkable.NON_WALKABLE)
+                notifyObserver("nonwalkable");
+            walkable = newWalkable;
+        }
+        else {
+            notifyObserver("walkable_none");
+            walkable = Walkable.NONE;
+        }
 
-    public void setWalkable(boolean walkable) {
-        this.walkable = walkable;
-        if (walkable)
-            notifyObserver("walkable");
-        else
-            notifyObserver("nonwalkable");
+        notifyObserver("repaint");
     }
 
     @Override

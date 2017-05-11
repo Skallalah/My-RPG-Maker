@@ -65,7 +65,7 @@ public class MapPanelView extends JPanel implements Observer {
 
     @Override
     public void update(String str) {
-        if (str.equals("Repaint")) {
+        if (str.equals("repaint")) {
             revalidate();
             repaint();
         }

@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Hashtable;
 
 import Common.Executor;
 import Common.Observer;
@@ -74,7 +75,7 @@ public class EditorView extends JFrame implements Observer {
         helpMenu.add(commandsItem);
         helpMenu.add(moreItem);
         menuBar.add(helpMenu);
-        
+
         JToolBar toolBar = new JToolBar();
         toolBar.setFloatable(false);
         toolBar.setLayout(new BoxLayout(toolBar, BoxLayout.X_AXIS));
@@ -174,29 +175,45 @@ public class EditorView extends JFrame implements Observer {
                 BufferedImage img = SpriteResources.pathToImage.get(SpriteResources.selectedSprite);
                 Cursor c = toolkit.createCustomCursor(img, new Point(img.getWidth() / 2, img.getHeight() / 2), "img");
                 setCursor(c);
-            }
-            else
+            } else
                 setCursor(Cursor.getDefaultCursor());
         });
     }
 
     private ImageIcon getIcon(String path) {
-        return new ImageIcon(new ImageIcon("resources/icons/" + path).getImage().getScaledInstance(18, 18,  java.awt.Image.SCALE_SMOOTH));
+        return new ImageIcon(new ImageIcon("resources/icons/" + path).getImage().getScaledInstance(18, 18, java.awt.Image.SCALE_SMOOTH));
     }
 
-    public void setWalkableButtons(boolean walkable) {
-        if (walkable) {
+    private void addAllMaps() {
+        Hashtable<Integer, GameMap> maps = model.getCurrentWorld().getMaps();
+        for (GameMap map : maps.values()) {
+            MapPanelModel mapPanelModel = new MapPanelModel(map);
+            MapPanelView mapPanelView = new MapPanelView(mapPanelModel);
+            MapPanelController mapPanelController = new MapPanelController(mapPanelModel, mapPanelView);
+            mapPanelController.control();
+            JScrollPane newMap = new JScrollPane(mapPanelView);
+            newMap.setPreferredSize(new Dimension(0, 0));
+            rightPanel.addTab(map.getName(), newMap);
+        }
+    }
+
+    public void setWalkableButtons(Walkable walkable) {
+        if (walkable == Walkable.WALKABLE) {
+            walkableButton.setOpaque(true);
+            notwalkableButton.setOpaque(false);
+            walkableButton.setEnabled(true);
+            notwalkableButton.setEnabled(false);
+        } else if (walkable == Walkable.NON_WALKABLE) {
+            walkableButton.setOpaque(false);
+            notwalkableButton.setOpaque(true);
             walkableButton.setEnabled(false);
             notwalkableButton.setEnabled(true);
+        } else {
             walkableButton.setOpaque(true);
-        }
-        else {
-            walkableButton.setOpaque(false);
+            notwalkableButton.setOpaque(true);
             walkableButton.setEnabled(true);
             notwalkableButton.setEnabled(true);
         }
-        revalidate();
-        repaint();
     }
 
     public JButton getNewButton() {
@@ -236,11 +253,17 @@ public class EditorView extends JFrame implements Observer {
         else if (str.equals("removeAllTabs")) {
             rightPanel.removeAll();
         }
+        else if (str.equals("addAllMaps")) {
+            addAllMaps();
+        }
         else if (str.equals("walkable")) {
-            setWalkableButtons(true);
+            setWalkableButtons(Walkable.WALKABLE);
         }
         else if (str.equals("nonwalkable")) {
-            setWalkableButtons(false);
+            setWalkableButtons(Walkable.NON_WALKABLE);
+        }
+        else if (str.equals("walkable_none")) {
+            setWalkableButtons(Walkable.NONE);
         }
     }
 }
