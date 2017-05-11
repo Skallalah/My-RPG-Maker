@@ -3,6 +3,7 @@ package SpritesPanel;
 import Common.Executor;
 import Common.Observer;
 import Common.SpriteResources;
+import EditorWindow.EditorModel;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -27,7 +28,7 @@ public class SpritesPanelController {
                 Executor.executor.submit(() -> {
                     SpriteResources.foregroundSprites = model.isForegroundSprite();
                     SpriteResources.selectedSprite = detectSelectedSprite(e.getX(), e.getY());
-                    // SET CURSOR
+                    EditorModel.getSelf().notifyObserver("setCursor");
                 });
             }
         });

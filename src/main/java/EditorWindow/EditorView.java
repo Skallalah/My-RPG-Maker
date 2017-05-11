@@ -167,7 +167,7 @@ public class EditorView extends JFrame implements Observer {
 
     }
 
-    public void resetCursor() {
+    public void setCursor() {
         Executor.executor.submit(() -> {
             if (SpriteResources.selectedSprite != null) {
                 Toolkit toolkit = Toolkit.getDefaultToolkit();
@@ -248,6 +248,9 @@ public class EditorView extends JFrame implements Observer {
         if (str.equals("repaint")) {
             revalidate();
             repaint();
+        }
+        else if (str.equals("setCursor")) {
+            setCursor();
         }
         else if (str.equals("removeAllTabs")) {
             rightPanel.removeAll();
