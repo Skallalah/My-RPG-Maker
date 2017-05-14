@@ -10,12 +10,14 @@ import java.awt.image.BufferedImage;
 import static java.lang.Integer.max;
 
 public class SpritesPanelView extends JPanel implements Observer {
-    String pathFilter;
+    SpritesPanelModel model;
 
-    public SpritesPanelView(String pathFilter){
+    public SpritesPanelView(SpritesPanelModel model){
+        this.model = model;
+        model.addObserver(this);
+
         setBackground(Color.WHITE);
         setDoubleBuffered(true);
-        this.pathFilter = pathFilter;
     }
 
     @Override
@@ -24,22 +26,33 @@ public class SpritesPanelView extends JPanel implements Observer {
         int x = 0;
         int y = 0;
         int maxy = 0;
-        for (BufferedImage img : SpriteResources.images) {
-            if (SpriteResources.imageToPath.get(img).startsWith(pathFilter)) {
-                if (x + img.getWidth() > 300) {
-                    x = 0;
-                    y = maxy + 16;
-                }
-                g.drawImage(img, x, y, null);
-                x += img.getWidth() + 16;
-                maxy = max(maxy, img.getHeight());
+        for (BufferedImage img : model.getImages()) {
+            if (x + img.getWidth() > 300) {
+                x = 0;
+                y = maxy + 16;
             }
+            g.drawImage(img, x, y, null);
+            x += img.getWidth() + 16;
+            maxy = max(maxy, img.getHeight());
         }
         setPreferredSize(new Dimension(0, maxy + 100));
     }
 
+    private void errorOnSprite() {
+        JOptionPane.showMessageDialog(this,
+                "This is not a valid sprite or the dimension of the choosen sprite might not be multiple of 16.",
+                "Error on sprite",
+                JOptionPane.ERROR_MESSAGE);
+    }
+
     @Override
     public void update(String str) {
-
+        if (str.equals("repaint")) {
+            revalidate();
+            repaint();
+        }
+        else if (str.equals("errorOnSprite")) {
+            errorOnSprite();
+        }
     }
 }

@@ -9,9 +9,17 @@ public class GameObject {
         pos_x_ = pos_x;
         pos_y_ = pos_y;
         img_path_sprite_ = null;
-        img_path_face_ = null;
         action_button_ = null;
         player_touch_ = null;
+        id_ = null;
+    }
+
+    public void setId(Integer id) {
+        this.id_ = id_;
+    }
+
+    public Integer getId() {
+        return id_;
     }
 
     public int getX() {
@@ -20,15 +28,6 @@ public class GameObject {
 
     public int getY() {
         return pos_y_;
-    }
-
-    // Image modifications
-    public String get_face() {
-        return img_path_face_;
-    }
-
-    public void set_face(String face) {
-        this.img_path_face_ = face;
     }
 
     public String get_sprite() {
@@ -57,6 +56,9 @@ public class GameObject {
         this.player_touch_ = id_script;
     }
 
+    // Id for better use inside the
+    private Integer id_;
+
     // Localisation of the object
     private Integer pos_x_;
     private Integer pos_y_;
@@ -64,7 +66,6 @@ public class GameObject {
 
     // Script utilities
     private String img_path_sprite_;
-    private String img_path_face_; // For dialogues
     private Integer action_button_; // Id for the script when a player push the interaction button
     private Integer player_touch_; // Id for the script when a player touch the position of the object
 

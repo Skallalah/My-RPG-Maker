@@ -1,9 +1,12 @@
 package EditorWindow;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Hashtable;
 
 import Common.Executor;
@@ -23,15 +26,25 @@ public class EditorView extends JFrame implements Observer {
     JButton newButton;
     JButton openButton;
     JButton saveButton;
+    JButton moveButton;
+    JButton selectButton;
     JButton removeButton;
     JButton walkableButton;
     JButton notwalkableButton;
     JButton gridButton;
+    JButton undoButton;
     JButton playButton;
+    JButton characButton;
+    JButton recyclebinButton;
+    JButton addTileButton;
+    JButton addObjectButton;
+    JButton exitButton;
     JMenuItem newItem;
     JMenuItem openItem;
     JMenuItem saveItem;
     JMenuItem exitItem;
+    JMenuItem undoItem;
+    JMenuItem redoItem;
 
     public EditorView(EditorModel model) {
         this.model = model;
@@ -55,8 +68,8 @@ public class EditorView extends JFrame implements Observer {
         menuBar.add(fileMenu);
 
         JMenu editMenu = new JMenu("Edit");
-        JMenuItem undoItem = new JMenuItem("Undo");
-        JMenuItem redoItem = new JMenuItem("Redo");
+        undoItem = new JMenuItem("Undo");
+        redoItem = new JMenuItem("Redo");
         editMenu.add(undoItem);
         editMenu.add(redoItem);
         menuBar.add(editMenu);
@@ -85,6 +98,12 @@ public class EditorView extends JFrame implements Observer {
         ImageIcon save_b = getIcon("save.png");
         saveButton = new JButton(save_b);
         toolBar.add(saveButton);
+        ImageIcon move_b = getIcon("move.png");
+        moveButton = new JButton(move_b);
+        toolBar.add(moveButton);
+        ImageIcon select_b = getIcon("selection.png");
+        selectButton = new JButton(select_b);
+        toolBar.add(selectButton);
         ImageIcon cut_b = getIcon("cut.png");
         JButton cutButton = new JButton(cut_b);
         toolBar.add(cutButton);
@@ -94,15 +113,18 @@ public class EditorView extends JFrame implements Observer {
         ImageIcon paste_b = getIcon("paste.png");
         JButton pasteButton = new JButton(paste_b);
         toolBar.add(pasteButton);
-        ImageIcon remove_b = getIcon("remove.png");
+        ImageIcon remove_b = getIcon("eraser.png");
         removeButton = new JButton(remove_b);
         toolBar.add(removeButton);
         ImageIcon undo_b = getIcon("undo.png");
-        JButton undoButton = new JButton(undo_b);
+        undoButton = new JButton(undo_b);
         toolBar.add(undoButton);
         ImageIcon play_b = getIcon("play.png");
         playButton = new JButton(play_b);
         toolBar.add(playButton);
+        ImageIcon charac_b = getIcon("character.png");
+        characButton = new JButton(charac_b);
+        toolBar.add(characButton);
         ImageIcon walkable_b = getIcon("walkable.png");
         walkableButton = new JButton(walkable_b);
         toolBar.add(walkableButton);
@@ -112,35 +134,65 @@ public class EditorView extends JFrame implements Observer {
         ImageIcon grid_b = getIcon("grid.png");
         gridButton = new JButton(grid_b);
         toolBar.add(gridButton);
+        ImageIcon recyclebin_b = getIcon("recyclebin.png");
+        recyclebinButton = new JButton(recyclebin_b);
+        toolBar.add(recyclebinButton);
+        ImageIcon addTile_b = getIcon("addtile.png");
+        addTileButton = new JButton(addTile_b);
+        toolBar.add(addTileButton);
+        ImageIcon addObject_b = getIcon("addobject.png");
+        addObjectButton = new JButton(addObject_b);
+        toolBar.add(addObjectButton);
+
+        ImageIcon exit_b = getIcon("exit.png");
+        exitButton = new JButton(exit_b);
+        toolBar.add(exitButton);
+
 
         add(toolBar, BorderLayout.NORTH);
 
-        try {
-            SpriteResources.loadSprites("resources/sprites");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        SpritesPanelModel spritesPanelModel1 = new SpritesPanelModel(false);
-        SpritesPanelView spritesPanelView1 = new SpritesPanelView("resources/sprites/backgroundTile");
+        spritesPanelModel1 = new SpritesPanelModel("resources/sprites/backgroundTile", false);
+        SpritesPanelView spritesPanelView1 = new SpritesPanelView(spritesPanelModel1);
         SpritesPanelController spritesPanelController1 = new SpritesPanelController(spritesPanelModel1, spritesPanelView1);
         spritesPanelController1.control();
         JScrollPane topLeftPanel1 = new JScrollPane(spritesPanelView1);
         topLeftPanel1.setPreferredSize(new Dimension(320, 200));
 
-        SpritesPanelModel spritesPanelModel2 = new SpritesPanelModel(true);
-        SpritesPanelView spritesPanelView2 = new SpritesPanelView("resources/sprites/foregroundObject");
+        spritesPanelModel2 = new SpritesPanelModel("resources/sprites/foregroundObject", true);
+        SpritesPanelView spritesPanelView2 = new SpritesPanelView(spritesPanelModel2);
         SpritesPanelController spritesPanelController2 = new SpritesPanelController(spritesPanelModel2, spritesPanelView2);
         spritesPanelController2.control();
         JScrollPane topLeftPanel2 = new JScrollPane(spritesPanelView2);
         topLeftPanel2.setPreferredSize(new Dimension(320, 200));
 
-        JSplitPane topLeftPanel = new JSplitPane(JSplitPane.VERTICAL_SPLIT, topLeftPanel1, topLeftPanel2);
+        JSplitPane topLeft1 = new JSplitPane(JSplitPane.VERTICAL_SPLIT, topLeftPanel1, topLeftPanel2);
+        topLeft1.setResizeWeight(0.5);
+
+        SpritesPanelModel spritesPanelModel3 = new SpritesPanelModel("resources/sprites/npc", true);
+        SpritesPanelView spritesPanelView3 = new SpritesPanelView(spritesPanelModel3);
+        SpritesPanelController spritesPanelController3 = new SpritesPanelController(spritesPanelModel3, spritesPanelView3);
+        spritesPanelController3.control();
+        JScrollPane topLeftPanel3 = new JScrollPane(spritesPanelView3);
+        topLeftPanel3.setPreferredSize(new Dimension(320, 200));
+
+        SpritesPanelModel spritesPanelModel4 = new SpritesPanelModel("resources/sprites/teleporter", true);
+        SpritesPanelView spritesPanelView4 = new SpritesPanelView(spritesPanelModel4);
+        SpritesPanelController spritesPanelController4 = new SpritesPanelController(spritesPanelModel4, spritesPanelView4);
+        spritesPanelController4.control();
+        JScrollPane topLeftPanel4 = new JScrollPane(spritesPanelView4);
+        topLeftPanel4.setPreferredSize(new Dimension(320, 200));
+
+        JSplitPane topLeft2 = new JSplitPane(JSplitPane.VERTICAL_SPLIT, topLeftPanel3, topLeftPanel4);
+        topLeft2.setResizeWeight(0.5);
+
+        JSplitPane topLeftPanel = new JSplitPane(JSplitPane.VERTICAL_SPLIT, topLeft1, topLeft2);
+        topLeftPanel.setResizeWeight(0.5);
 
         MapsPanel mapsPanel = new MapsPanel(new DefaultMutableTreeNode("Maps"));
         JScrollPane bottomLeftPanel = new JScrollPane(mapsPanel);
 
         JSplitPane leftPanel = new JSplitPane(JSplitPane.VERTICAL_SPLIT, topLeftPanel, bottomLeftPanel);
+        leftPanel.setResizeWeight(0.7);
 
         rightPanel = new JTabbedPane();
 
@@ -148,7 +200,7 @@ public class EditorView extends JFrame implements Observer {
         GameCharacter charac = new GameCharacter("player", "resources/sprites/npc/ninja.png", new GameClass("Rogue"));
         charac.spawn_player(0, 0, 0);
         model.getCurrentWorld().setCharacter_(charac);
-        GameMap map1 = new GameMap("Map1", 200, 200, "resources/sprites/backgroundTile/grass.png");
+        GameMap map1 = new GameMap("Map", 200, 200, "resources/sprites/backgroundTile/grass.png");
         model.getCurrentWorld().addMap(map1);
 
         MapPanelModel mapPanelModel = new MapPanelModel(model.getCurrentWorld().getMap(0));
@@ -215,6 +267,44 @@ public class EditorView extends JFrame implements Observer {
         }
     }
 
+    private void errorOnFile() {
+        JOptionPane.showMessageDialog(this,
+                "This is not a valid world file.",
+                "Error on world file",
+                JOptionPane.ERROR_MESSAGE);
+    }
+
+    private void setEraserCursor() {
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        File path = new File("resources/icons/eraser.png");
+        BufferedImage img = null;
+        try {
+            img = ImageIO.read(path);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Cursor c = toolkit.createCustomCursor(img, new Point(20, 60), "img");
+        setCursor(c);
+    }
+
+    private void setCharacCursor() {
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        File path = new File("resources/icons/player.png");
+        BufferedImage img = null;
+        try {
+            img = ImageIO.read(path);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Cursor c = toolkit.createCustomCursor(img, new Point(img.getWidth() / 2, img.getHeight() / 2), "img");
+        setCursor(c);
+    }
+
+    private void exit() {
+        dispose();
+        System.exit(0);
+    }
+
     public JButton getNewButton() {
         return newButton;
     }
@@ -222,12 +312,32 @@ public class EditorView extends JFrame implements Observer {
         return openButton;
     }
     public JButton getSaveButton() { return saveButton; }
+    public JButton getMoveButton() { return moveButton; }
+    public JButton getSelectButton() { return selectButton; }
     public JButton getRemoveButton() { return removeButton; }
     public JButton getWalkableButton() { return walkableButton; }
     public JButton getNotwalkableButton() { return notwalkableButton; }
     public JButton getGridButton() { return gridButton; }
+    public JButton getUndoButton() {
+        return undoButton;
+    }
     public JButton getPlayButton() {
         return playButton;
+    }
+    public JButton getCharacButton() {
+        return characButton;
+    }
+    public JButton getRecycleBinButton() {
+        return recyclebinButton;
+    }
+    public JButton getAddTileButton() {
+        return addTileButton;
+    }
+    public JButton getAddObjectButton() {
+        return addObjectButton;
+    }
+    public JButton getExitButton() {
+        return exitButton;
     }
     public JMenuItem getNewMenuItem() {
         return newItem;
@@ -241,7 +351,16 @@ public class EditorView extends JFrame implements Observer {
     public JMenuItem getExitMenuItem() {
         return exitItem;
     }
+    public JMenuItem getUndoMenuItem() {
+        return undoItem;
+    }
+    public JMenuItem getRedoMenuItem() {
+        return redoItem;
+    }
+    public SpritesPanelModel getTileModel() { return spritesPanelModel1; }
+    public SpritesPanelModel getObjectModel() { return spritesPanelModel2; }
     public static JTabbedPane getMapPanel() { return rightPanel; }
+   // public Component getRightPanel() { return rightPanel.getSelectedComponent(); }
 
     @Override
     public void update(String str) {
@@ -267,7 +386,21 @@ public class EditorView extends JFrame implements Observer {
         else if (str.equals("walkable_none")) {
             setWalkableButtons(Walkable.NONE);
         }
+        else if (str.equals("setEraserCursor")) {
+            setEraserCursor();
+        }
+        else if (str.equals("setCharacCursor")) {
+            setCharacCursor();
+        }
+        else if (str.equals("errorOnFile")) {
+            errorOnFile();
+        }
+        else if (str.equals("exit")) {
+            exit();
+        }
     }
 
+    SpritesPanelModel spritesPanelModel1;
+    SpritesPanelModel spritesPanelModel2;
     private static JTabbedPane rightPanel;
 }

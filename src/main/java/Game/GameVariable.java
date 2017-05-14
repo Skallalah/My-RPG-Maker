@@ -7,6 +7,15 @@ public class GameVariable {
     public GameVariable(String name, Integer value) {
         name_ = name;
         value_ = value;
+        id_ = null;
+    }
+
+    public Integer getId() {
+        return id_;
+    }
+
+    public void setId(Integer id) {
+        this.id_ = id_;
     }
 
     public void setName(String name) {
@@ -27,4 +36,5 @@ public class GameVariable {
 
     private String name_;
     private Integer value_;
+    private Integer id_;
 }

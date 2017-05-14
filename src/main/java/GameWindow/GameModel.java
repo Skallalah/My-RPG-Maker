@@ -1,7 +1,5 @@
 package GameWindow;
 
-import Common.Executor;
-import Common.SpriteResources;
 import Game.GameMap;
 import Game.GameWorld;
 

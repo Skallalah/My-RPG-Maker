@@ -5,4 +5,6 @@ package Game;
  */
 public interface GameScript {
     public boolean execute(GameWorld world);
+    public Integer getId();
+    public void setId(Integer id);
 }

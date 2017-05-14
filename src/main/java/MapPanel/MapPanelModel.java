@@ -1,12 +1,14 @@
 package MapPanel;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Vector;
 
-import Common.Observable;
-import Common.Observer;
-import Common.SpriteResources;
+import Common.*;
+import Common.Event;
+import EditorWindow.EditorModel;
+import EditorWindow.Walkable;
 import Game.GameForeground;
 import Game.GameMap;
 
@@ -30,12 +32,43 @@ public class MapPanelModel implements Observable {
     public void addObject(int x, int y) {
         BufferedImage img = SpriteResources.pathToImage.get(SpriteResources.selectedSprite);
         if (img != null) {
-            if (SpriteResources.foregroundSprites)
-                map.addObject(new GameForeground((x - img.getWidth() / 32), (y - img.getHeight() / 32), SpriteResources.selectedSprite));
-            else
+            if (SpriteResources.foregroundSprites) {
+                GameForeground obj = new GameForeground(x - img.getWidth() / 32, y - img.getHeight() / 32, SpriteResources.selectedSprite);
+                if (canAddObject(map, obj)) {
+                    map.addObject(obj);
+                    History.addEvent(new Event(Event.Action.ADD_OBJECT, map, obj));
+                }
+            }
+            else {
+                History.addEvent(new Event(Event.Action.ADD_TILE, map, x, y));
                 map.setPathTile(x, y, SpriteResources.selectedSprite);
+                if (SpriteResources.walkable == Walkable.WALKABLE)
+                    map.setWalkable(x, y, true);
+                else if (SpriteResources.walkable == Walkable.NON_WALKABLE)
+                    map.setWalkable(x, y, false);
+            }
         }
         notifyObserver("repaint");
+    }
+
+    private boolean canAddObject(GameMap map, GameForeground newObj) {
+        for (GameForeground obj : map.getObjects()) {
+            int x = obj.getX();
+            int y = obj.getY();
+            BufferedImage img = SpriteResources.pathToImage.get(obj.getPath());
+            int dx = (img.getWidth() / 16) - 1;
+            int dy = (img.getHeight() / 16) - 1;
+
+            int nx = newObj.getX();
+            int ny = newObj.getY();
+            img = SpriteResources.pathToImage.get(newObj.getPath());
+            int ndx = (img.getWidth() / 16) - 1;
+            int ndy = (img.getHeight() / 16) - 1;
+
+            if (((nx >= x && nx <= x + dx) || (nx + ndx >= x && nx + ndx <= x + dx)) && ((ny >= y && ny <= y + dy) || (ny + ndy >= y && ny + ndy <= y + dy)))
+                return false;
+        }
+        return true;
     }
 
     public void removeObjects(int x, int y) {
@@ -50,9 +83,58 @@ public class MapPanelModel implements Observable {
             int dx = img.getWidth() / 16;
             int dy = img.getHeight() / 16;
 
-            if (x >= ox && x <= ox + dx && y >= oy && y <= oy + dy)
+            if (x >= ox && x <= ox + dx && y >= oy && y <= oy + dy) {
                 objects.remove(obj);
+                History.addEvent(new Event(Event.Action.RM_OBJECT, map, obj));
+            }
         }
+        notifyObserver("repaint");
+    }
+
+    public void grab(int x, int y) {
+        for (GameForeground obj : map.getObjects()) {
+            int ox = obj.getX();
+            int oy = obj.getY();
+            BufferedImage img = SpriteResources.pathToImage.get(obj.getPath());
+            int odx = img.getWidth() / 16;
+            int ody = img.getHeight() / 16;
+
+            if (x >= ox && x <= ox + odx && y >= oy && y <= oy + ody) {
+                SpriteResources.selectedSprite = obj.getPath();
+                SpriteResources.foregroundSprites = true;
+                map.getObjects().remove(obj);
+                EditorModel.getSelf().notifyObserver("setCursor");
+                notifyObserver("repaint");
+                return;
+            }
+        }
+        SpriteResources.selectedSprite = map.getPathTile(x, y);
+        SpriteResources.foregroundSprites = false;
+        EditorModel.getSelf().notifyObserver("setCursor");
+    }
+
+    public void select(int x, int y) {
+        SpriteResources.x = x * 16;
+        SpriteResources.y = y * 16;
+        SpriteResources.selection = new Rectangle();
+    }
+
+    public void release(int ox, int oy) {
+        int x = SpriteResources.x;
+        int y = SpriteResources.y;
+        ox *= 16;
+        oy *= 16;
+        if (ox < x) {
+            int tmp = x;
+            x = ox;
+            ox = tmp;
+        }
+        if (oy < y) {
+            int tmp = y;
+            y = oy;
+            oy = tmp;
+        }
+        SpriteResources.selection.setBounds(x, y, ox - x, oy - y);
         notifyObserver("repaint");
     }
 

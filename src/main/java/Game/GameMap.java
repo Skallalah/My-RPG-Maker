@@ -20,6 +20,7 @@ public class GameMap {
             }
             map_.add(row);
         }
+        id_ = null;
     }
 
     public int getHeight() {
@@ -46,6 +47,14 @@ public class GameMap {
         this.name_ = name;
     }
 
+    public Integer getId() {
+        return id_;
+    }
+
+    public void setId(Integer id) {
+        this.id_ = id_;
+    }
+
     // Map modification of tiles
     public boolean isWalkable(int x, int y) {
         return map_.get(y).get(x).isWalkable();
@@ -67,6 +76,7 @@ public class GameMap {
         return objects_;
     }
 
+    private Integer id_;
     private String name_;
     private int width_;
     private int height_;

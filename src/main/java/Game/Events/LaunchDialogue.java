@@ -17,5 +17,14 @@ public class LaunchDialogue implements GameScript {
         return true;
     }
 
+    public void setId(Integer id) {
+        this.id_ = id_;
+    }
+
+    public Integer getId() {
+        return id_;
+    }
+
+    private Integer id_;
     private Integer id_dialogue_;
 }

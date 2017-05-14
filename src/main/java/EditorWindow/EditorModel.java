@@ -2,6 +2,7 @@ package EditorWindow;
 
 import Common.Observable;
 import Common.Observer;
+import Common.SpriteResources;
 import Game.GameWorld;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
@@ -14,12 +15,10 @@ public class EditorModel implements Observable {
 
     private static EditorModel self;
     private GameWorld current_world_;
-    private Walkable walkable;
     private static boolean gridDisplay;
 
     public EditorModel() {
         gridDisplay = true;
-        walkable = Walkable.NONE;
         self = this;
     }
 
@@ -47,8 +46,8 @@ public class EditorModel implements Observable {
             setCurrentWorld(gson.fromJson(reader, GameWorld.class));
             notifyObserver("removeAllTabs");
             notifyObserver("addAllMaps");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            notifyObserver("errorOnFile");
         }
     }
 
@@ -57,24 +56,40 @@ public class EditorModel implements Observable {
         String jsonString = gson.toJson(getCurrentWorld());
         try(  PrintWriter out = new PrintWriter( path )  ){
             out.println(jsonString);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            notifyObserver("errorOnFile");
         }
     }
 
     public void setWalkable(Walkable newWalkable) {
-        if (walkable == Walkable.NONE) {
+        if (SpriteResources.walkable == Walkable.NONE) {
             if (newWalkable == Walkable.WALKABLE)
                 notifyObserver("walkable");
             else if (newWalkable == Walkable.NON_WALKABLE)
                 notifyObserver("nonwalkable");
-            walkable = newWalkable;
+            SpriteResources.walkable = newWalkable;
         }
         else {
             notifyObserver("walkable_none");
-            walkable = Walkable.NONE;
+            SpriteResources.walkable = Walkable.NONE;
         }
 
+        notifyObserver("repaint");
+    }
+
+    public void exit() {
+        notifyObserver("exit");
+    }
+
+    public void setEraserCursor() {
+        notifyObserver("setEraserCursor");
+    }
+
+    public void setCharacCursor() {
+        notifyObserver("setCharacCursor");
+    }
+
+    public void repaint() {
         notifyObserver("repaint");
     }
 

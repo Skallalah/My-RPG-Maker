@@ -32,7 +32,7 @@ public class MapsPanel extends JTree{
         MouseListener ml = new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
                 TreePath selPath = getPathForLocation(e.getX(), e.getY());
-                if(e.getClickCount() == 2) {
+                if(e.getClickCount() == 2 && selPath != null) {
                     String jtreePath = computeJtreePath(selPath.getPath());
 
                     String filePath = jtreePathToFilePath.get(jtreePath);

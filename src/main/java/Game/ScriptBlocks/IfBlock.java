@@ -11,6 +11,7 @@ public class IfBlock implements GameScript {
         condition_ = null;
         then_ = null;
         else_ = null;
+        id_ = null;
     }
 
     @Override
@@ -38,6 +39,15 @@ public class IfBlock implements GameScript {
         this.then_ = thenScript;
     }
 
+    public Integer getId() {
+        return id_;
+    }
+
+    public void setId(Integer id) {
+        this.id_ = id_;
+    }
+
+    private Integer id_;
     private GameScript condition_;
     private GameScript then_;
     private GameScript else_;

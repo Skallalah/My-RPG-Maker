@@ -3,6 +3,7 @@ package Game;
 import Game.GameMap;
 import Game.GameScript;
 
+import java.util.HashMap;
 import java.util.Hashtable;
 
 /**
@@ -43,6 +44,7 @@ public class GameWorld {
     }
 
     public Integer addMap(GameMap map) {
+        map.setId(id_map_);
         maps_.put(id_map_++, map);
         return id_map_;
     }
@@ -57,6 +59,7 @@ public class GameWorld {
     }
 
     public Integer addScript(GameScript script) {
+        script.setId(id_script_);
         scripts_.put(id_script_++, script);
         return id_script_;
     }
@@ -71,6 +74,7 @@ public class GameWorld {
     }
 
     public Integer addObject(GameObject object) {
+        object.setId(id_objects_);
         objects_.put(id_objects_++, object);
         return id_objects_;
     }
@@ -85,6 +89,7 @@ public class GameWorld {
     }
 
     public Integer addVariable(GameVariable variable) {
+        variable.setId(id_variables_);
         variables_.put(id_variables_++, variable);
         return id_variables_;
     }

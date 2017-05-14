@@ -12,6 +12,7 @@ public class CheckBlock implements GameScript {
         var_id_ = null;
         comp_ = null;
         value_ = null;
+        id_ = null;
     }
 
     public enum compType {
@@ -46,7 +47,16 @@ public class CheckBlock implements GameScript {
         this.var_id_ = var_id;
     }
 
+    public Integer getId() {
+        return id_;
+    }
+
+    public void setId(Integer id) {
+        this.id_ = id_;
+    }
+
     private Integer var_id_;
+    private Integer id_;
     private compType comp_;
     private Integer value_;
 }
