@@ -330,6 +330,9 @@ public class EditorView extends JFrame implements Observer {
     public JButton getAddObjectButton() {
         return addObjectButton;
     }
+    public JButton getEventButton() {
+        return eventButton;
+    }
     public JButton getExitButton() {
         return exitButton;
     }

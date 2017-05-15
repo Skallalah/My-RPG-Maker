@@ -258,6 +258,15 @@ public class EditorController {
                 });
             }
         });
+
+        view.getEventButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                Executor.executor.submit(() -> {
+                    SpriteResources.selectedSprite = "event";
+                });
+            }
+        });
     }
 
     private void newAction() {

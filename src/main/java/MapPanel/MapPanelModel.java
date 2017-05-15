@@ -5,6 +5,14 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Vector;
 
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
 import Common.*;
 import Common.Event;
 import EditorWindow.EditorModel;
@@ -29,7 +37,7 @@ public class MapPanelModel implements Observable {
         return map.getHeight();
     }
 
-    public void addObject(int x, int y) {
+    public void drop(int x, int y) {
         BufferedImage img = SpriteResources.pathToImage.get(SpriteResources.selectedSprite);
         if (img != null) {
             if (SpriteResources.foregroundSprites) {
@@ -142,6 +150,36 @@ public class MapPanelModel implements Observable {
         }
         SpriteResources.selection.setBounds(x, y, ox - x, oy - y);
         notifyObserver("repaint");
+    }
+
+    public void addEvent() {
+        JFrame newEvent = new JFrame();
+        newEvent.setSize(300, 300);
+        newEvent.setLayout(new GridBagLayout());
+
+        JPanel panel = new JPanel(new GridLayout(5, 1));
+
+        String[] spritesChoices = {"Sprite 1", "Sprite 2"};
+        JComboBox sprites = new JComboBox(spritesChoices);
+        panel.add(sprites);
+
+        String[] eventChoices = {"Teleport", "Start Dialog"};
+        JComboBox events = new JComboBox(eventChoices);
+        panel.add(events);
+
+        JTextField positionX = new JTextField();
+        positionX.setColumns(30);
+        panel.add(positionX);
+
+        JTextField positionY = new JTextField();
+        positionY.setColumns(30);
+        panel.add(positionY);
+
+        JButton submit = new JButton("Done");
+        panel.add(submit);
+
+        newEvent.add(panel);
+        newEvent.setVisible(true);
     }
 
     public void repaint() {

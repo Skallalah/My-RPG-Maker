@@ -56,6 +56,8 @@ public class MapPanelController {
         else if (SpriteResources.selectedSprite.equals("player")) {
             SpriteResources.playerPosition = new Point(x, y);
             model.repaint();
+        } else if (SpriteResources.selectedSprite.equals("event")) {
+            model.addEvent();
         }
         else
             action(x, y);
@@ -67,7 +69,7 @@ public class MapPanelController {
         else if (SpriteResources.selectedSprite.equals("move"))
             model.grab(x, y);
         else
-            model.addObject(x, y);
+            model.drop(x, y);
     }
 
     private void releaseAction(int x, int y) {
