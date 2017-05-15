@@ -144,6 +144,10 @@ public class MapPanelModel implements Observable {
         notifyObserver("repaint");
     }
 
+    public void repaint() {
+        notifyObserver("repaint");
+    }
+
     @Override
     public void addObserver(Observer obs) {
         observerList.add(obs);

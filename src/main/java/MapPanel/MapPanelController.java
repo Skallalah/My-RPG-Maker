@@ -55,6 +55,7 @@ public class MapPanelController {
             model.select(x, y);
         else if (SpriteResources.selectedSprite.equals("player")) {
             SpriteResources.playerPosition = new Point(x, y);
+            model.repaint();
         }
         else
             action(x, y);

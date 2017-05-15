@@ -38,6 +38,7 @@ public class EditorView extends JFrame implements Observer {
     JButton recyclebinButton;
     JButton addTileButton;
     JButton addObjectButton;
+    JButton eventButton;
     JButton exitButton;
     JMenuItem newItem;
     JMenuItem openItem;
@@ -134,7 +135,9 @@ public class EditorView extends JFrame implements Observer {
         ImageIcon addObject_b = getIcon("addobject.png");
         addObjectButton = new JButton(addObject_b);
         toolBar.add(addObjectButton);
-
+        ImageIcon event_b = getIcon("event.png");
+        eventButton = new JButton(event_b);
+        toolBar.add(eventButton);
         ImageIcon exit_b = getIcon("exit.png");
         exitButton = new JButton(exit_b);
         toolBar.add(exitButton);

@@ -33,6 +33,7 @@ public class MapPanelView extends JPanel implements Observer {
             drawGrid(g);
         drawSelection(g);
         drawWalkable(g);
+        drawPlayer(g);
     }
 
     private void drawTiles(Graphics g) {
@@ -96,6 +97,11 @@ public class MapPanelView extends JPanel implements Observer {
             x = 0;
             y += 16;
         }
+    }
+
+    private void drawPlayer(Graphics g) {
+        if (SpriteResources.playerPosition != null)
+            g.drawImage(SpriteResources.pathToImage.get("resources/sprites/foregroundObject/player.png"), SpriteResources.playerPosition.x * 16, SpriteResources.playerPosition.y * 16, null);
     }
 
     @Override
