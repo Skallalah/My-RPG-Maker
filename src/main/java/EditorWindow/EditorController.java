@@ -1,5 +1,6 @@
 package EditorWindow;
 
+import Common.EditorProperties;
 import Common.Executor;
 import Common.History;
 import Common.Observer;
@@ -191,7 +192,7 @@ public class EditorController {
                     Hashtable<Integer, GameMap> maps = model.getCurrentWorld().getMaps();
                     for(Integer id : maps.keySet())
                         if (model.getCurrentWorld().getMap(id).getName().equals(title))
-                            charac.spawn_player(id, SpriteResources.playerPosition.x, SpriteResources.playerPosition.y);
+                            charac.spawn_player(id, EditorProperties.playerPosition.x, EditorProperties.playerPosition.y);
 
                     model.getCurrentWorld().setCharacter_(charac);
                     GameModel playModel = new GameModel(model.getCurrentWorld());
@@ -222,7 +223,7 @@ public class EditorController {
                     EditorView.getMapPanel().remove(EditorView.getMapPanel().getSelectedComponent());
 
                     Hashtable<Integer, GameMap> maps = model.getCurrentWorld().getMaps();
-                    maps.values().remove(SpriteResources.mapToRender);
+                    maps.values().remove(EditorProperties.mapToRender);
                 });
             }
         });

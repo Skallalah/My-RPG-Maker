@@ -1,5 +1,6 @@
 package EditorWindow;
 
+import Common.EditorProperties;
 import Common.Observable;
 import Common.Observer;
 import Common.SpriteResources;
@@ -62,16 +63,16 @@ public class EditorModel implements Observable {
     }
 
     public void setWalkable(Walkable newWalkable) {
-        if (SpriteResources.walkable == Walkable.NONE) {
+        if (EditorProperties.walkable == Walkable.NONE) {
             if (newWalkable == Walkable.WALKABLE)
                 notifyObserver("walkable");
             else if (newWalkable == Walkable.NON_WALKABLE)
                 notifyObserver("nonwalkable");
-            SpriteResources.walkable = newWalkable;
+            EditorProperties.walkable = newWalkable;
         }
         else {
             notifyObserver("walkable_none");
-            SpriteResources.walkable = Walkable.NONE;
+            EditorProperties.walkable = Walkable.NONE;
         }
 
         notifyObserver("repaint");

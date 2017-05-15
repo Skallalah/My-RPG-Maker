@@ -1,5 +1,6 @@
 package MapPanel;
 
+import Common.EditorProperties;
 import Common.Executor;
 import Common.SpriteResources;
 
@@ -54,7 +55,7 @@ public class MapPanelController {
         if (SpriteResources.selectedSprite.equals("select"))
             model.select(x, y);
         else if (SpriteResources.selectedSprite.equals("player")) {
-            SpriteResources.playerPosition = new Point(x, y);
+            EditorProperties.playerPosition = new Point(x, y);
             model.repaint();
         } else if (SpriteResources.selectedSprite.equals("event")) {
             model.addEvent();

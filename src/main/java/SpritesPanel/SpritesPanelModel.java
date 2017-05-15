@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import Common.EditorProperties;
 import Common.Observable;
 import Common.Observer;
 import Common.SpriteResources;
@@ -75,18 +76,18 @@ public class SpritesPanelModel implements Observable {
 
     public void fillSelection(String imagePath) {
         if (!SpriteResources.foregroundSprites) {
-            Rectangle r = SpriteResources.selection;
+            Rectangle r = EditorProperties.selection;
             int x = r.x / 16;
             int y = r.y / 16;
             int w = (r.width / 16) + x;
             int h = (r.height / 16) + y;
             for (int i = x; i < w; i++) {
                 for (int j = y; j < h; j++) {
-                    SpriteResources.mapToRender.setPathTile(i, j, imagePath);
-                    SpriteResources.mapToRender.setWalkable(j, i, SpriteResources.walkable != Walkable.NON_WALKABLE);
+                    EditorProperties.mapToRender.setPathTile(i, j, imagePath);
+                    EditorProperties.mapToRender.setWalkable(j, i, EditorProperties.walkable != Walkable.NON_WALKABLE);
                 }
             }
-            SpriteResources.selection = null;
+            EditorProperties.selection = null;
             SpriteResources.selectedSprite = null;
             EditorModel.getSelf().notifyObserver("repaint");
         }

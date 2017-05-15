@@ -50,9 +50,9 @@ public class MapPanelModel implements Observable {
             else {
                 History.addEvent(new Event(Event.Action.ADD_TILE, map, x, y));
                 map.setPathTile(x, y, SpriteResources.selectedSprite);
-                if (SpriteResources.walkable == Walkable.WALKABLE)
+                if (EditorProperties.walkable == Walkable.WALKABLE)
                     map.setWalkable(y, x, true);
-                else if (SpriteResources.walkable == Walkable.NON_WALKABLE)
+                else if (EditorProperties.walkable == Walkable.NON_WALKABLE)
                     map.setWalkable(y, x, false);
             }
         }
@@ -128,14 +128,14 @@ public class MapPanelModel implements Observable {
     }
 
     public void select(int x, int y) {
-        SpriteResources.x = x * 16;
-        SpriteResources.y = y * 16;
-        SpriteResources.selection = new Rectangle();
+        EditorProperties.x = x * 16;
+        EditorProperties.y = y * 16;
+        EditorProperties.selection = new Rectangle();
     }
 
     public void release(int ox, int oy) {
-        int x = SpriteResources.x;
-        int y = SpriteResources.y;
+        int x = EditorProperties.x;
+        int y = EditorProperties.y;
         ox *= 16;
         oy *= 16;
         if (ox < x) {
@@ -148,7 +148,7 @@ public class MapPanelModel implements Observable {
             y = oy;
             oy = tmp;
         }
-        SpriteResources.selection.setBounds(x, y, ox - x, oy - y);
+        EditorProperties.selection.setBounds(x, y, ox - x, oy - y);
         notifyObserver("repaint");
     }
 

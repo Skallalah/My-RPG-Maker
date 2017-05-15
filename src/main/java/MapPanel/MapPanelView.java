@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.geom.Line2D;
 import java.awt.image.BufferedImage;
 
+import Common.EditorProperties;
 import Common.Observer;
 import Common.SpriteResources;
 import EditorWindow.EditorModel;
@@ -25,7 +26,7 @@ public class MapPanelView extends JPanel implements Observer {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        SpriteResources.mapToRender = model.map;
+        EditorProperties.mapToRender = model.map;
 
         drawTiles(g);
         drawObjects(g);
@@ -74,10 +75,10 @@ public class MapPanelView extends JPanel implements Observer {
     }
 
     private void drawSelection(Graphics g) {
-        if (SpriteResources.selection != null) {
+        if (EditorProperties.selection != null) {
             Graphics2D g2 = (Graphics2D) g;
             g2.setColor(new Color(255, 255, 224, 100));
-            g2.fill(SpriteResources.selection);
+            g2.fill(EditorProperties.selection);
         }
     }
 
@@ -100,8 +101,8 @@ public class MapPanelView extends JPanel implements Observer {
     }
 
     private void drawPlayer(Graphics g) {
-        if (SpriteResources.playerPosition != null)
-            g.drawImage(SpriteResources.pathToImage.get("resources/sprites/foregroundObject/player.png"), SpriteResources.playerPosition.x * 16, SpriteResources.playerPosition.y * 16, null);
+        if (EditorProperties.playerPosition != null)
+            g.drawImage(SpriteResources.pathToImage.get("resources/sprites/foregroundObject/player.png"), EditorProperties.playerPosition.x * 16, EditorProperties.playerPosition.y * 16, null);
     }
 
     @Override
