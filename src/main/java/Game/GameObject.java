@@ -40,20 +40,20 @@ public class GameObject {
 
 
     // Script getter/setter
-    public GameScript get_interaction(GameWorld world) {
-        return world.getScript(action_button_);
+    public GameScript get_interaction() {
+        return action_button_;
     }
 
-    public GameScript get_touch(GameWorld world) {
-        return world.getScript(player_touch_);
+    public GameScript get_touch() {
+        return player_touch_;
     }
 
-    public void set_interaction(Integer id_script) {
-        this.action_button_ = id_script;
+    public void set_interaction(GameScript script) {
+        this.action_button_ = script;
     }
 
-    public void set_touch(Integer id_script) {
-        this.player_touch_ = id_script;
+    public void set_touch(GameScript script) {
+        this.player_touch_ = script;
     }
 
     // Id for better use inside the
@@ -66,7 +66,7 @@ public class GameObject {
 
     // Script utilities
     private String img_path_sprite_;
-    private Integer action_button_; // Id for the script when a player push the interaction button
-    private Integer player_touch_; // Id for the script when a player touch the position of the object
+    private GameScript action_button_; // Id for the script when a player push the interaction button
+    private GameScript player_touch_; // Id for the script when a player touch the position of the object
 
 }

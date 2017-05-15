@@ -44,15 +44,6 @@ public class SpritesPanelController {
                 });
             }
         });
-        view.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseExited(MouseEvent mouseEvent) {
-
-               // Cursor c = Cursor.getDefaultCursor();
-               // ; view.setCursor(c);
-            }
-        });
-
     }
 
     public String detectSelectedSprite(int clickX, int clickY) {

@@ -41,8 +41,6 @@ public class MapPanelController {
                 });
             }
         });
-
-
     }
 
     private void dragAction(int x, int y) {

@@ -23,7 +23,7 @@ public class GameCharacter {
     public boolean moveUp(GameWorld world) {
         if (pos_y_ <= 0)
             return false;
-        if (world.getMap(id_map_).isWalkable(pos_x_, pos_y_ - 1)) {
+        if (world.getMap(id_map_).isWalkable(pos_y_ - 1, pos_x_)) {
             pos_y_--;
             return true;
         }
@@ -33,7 +33,7 @@ public class GameCharacter {
     public boolean moveDown(GameWorld world) {
         if (pos_y_ >= world.getMap(id_map_).getHeight())
             return false;
-        if (world.getMap(id_map_).isWalkable(pos_x_, pos_y_ + 1)) {
+        if (world.getMap(id_map_).isWalkable(pos_y_ + 1, pos_x_)) {
             pos_y_++;
             return true;
         }
@@ -43,7 +43,7 @@ public class GameCharacter {
     public boolean moveLeft(GameWorld world) {
         if (pos_x_ <= 0)
             return false;
-        if (world.getMap(id_map_).isWalkable(pos_x_ - 1, pos_y_)) {
+        if (world.getMap(id_map_).isWalkable(pos_y_, pos_x_ - 1)) {
             pos_x_--;
             return true;
         }
@@ -53,7 +53,7 @@ public class GameCharacter {
     public boolean moveRight(GameWorld world) {
         if (pos_x_ >= world.getMap(id_map_).getWidth())
             return false;
-        if (world.getMap(id_map_).isWalkable(pos_x_ + 1, pos_y_)) {
+        if (world.getMap(id_map_).isWalkable(pos_y_ , pos_x_ + 1)) {
             pos_x_++;
             return true;
         }

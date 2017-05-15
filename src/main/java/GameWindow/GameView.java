@@ -1,11 +1,13 @@
 package GameWindow;
 
+import Common.Observer;
+
 import javax.swing.*;
 
 /**
  * Created by skallalah on 09/05/17.
  */
-public class GameView extends JFrame {
+public class GameView extends JFrame implements Observer{
     public GameView(GameModel model) {
         gameModel_ = model;
         setTitle(model.getWorld().getName());
@@ -25,4 +27,8 @@ public class GameView extends JFrame {
     private GameMapViewer gameMapViewer_;
     private GameModel gameModel_;
 
+    @Override
+    public void update(String str) {
+
+    }
 }

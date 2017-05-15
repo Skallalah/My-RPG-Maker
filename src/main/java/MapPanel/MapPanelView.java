@@ -32,6 +32,7 @@ public class MapPanelView extends JPanel implements Observer {
         if (EditorModel.getSelf().getGridDisplay())
             drawGrid(g);
         drawSelection(g);
+        drawWalkable(g);
     }
 
     private void drawTiles(Graphics g) {
@@ -76,6 +77,24 @@ public class MapPanelView extends JPanel implements Observer {
             Graphics2D g2 = (Graphics2D) g;
             g2.setColor(new Color(255, 255, 224, 100));
             g2.fill(SpriteResources.selection);
+        }
+    }
+
+    private void drawWalkable(Graphics g) {
+        int x = 0;
+        int y = 0;
+
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setColor(new Color(255, 0, 0, 100));
+
+        for (int i = 0; i < model.getHeight(); i++) {
+            for (int j = 0; j < model.getWidth(); j++) {
+                if (!model.map.isWalkable(i, j))
+                    g2.fill(new Rectangle(x, y, 16, 16));
+                x += 16;
+            }
+            x = 0;
+            y += 16;
         }
     }
 

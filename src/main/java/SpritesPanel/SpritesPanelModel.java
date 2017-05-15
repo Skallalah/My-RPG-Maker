@@ -11,6 +11,7 @@ import Common.Observer;
 import Common.SpriteResources;
 import EditorWindow.EditorModel;
 import EditorWindow.EditorView;
+import EditorWindow.Walkable;
 import MapPanel.MapPanelController;
 import MapPanel.MapPanelModel;
 import MapPanel.MapPanelView;
@@ -82,8 +83,11 @@ public class SpritesPanelModel implements Observable {
             for (int i = x; i < w; i++) {
                 for (int j = y; j < h; j++) {
                     SpriteResources.mapToRender.setPathTile(i, j, imagePath);
+                    SpriteResources.mapToRender.setWalkable(j, i, SpriteResources.walkable != Walkable.NON_WALKABLE);
                 }
             }
+            SpriteResources.selection = null;
+            SpriteResources.selectedSprite = null;
             EditorModel.getSelf().notifyObserver("repaint");
         }
     }

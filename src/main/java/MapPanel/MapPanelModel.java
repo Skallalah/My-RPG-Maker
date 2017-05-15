@@ -43,9 +43,9 @@ public class MapPanelModel implements Observable {
                 History.addEvent(new Event(Event.Action.ADD_TILE, map, x, y));
                 map.setPathTile(x, y, SpriteResources.selectedSprite);
                 if (SpriteResources.walkable == Walkable.WALKABLE)
-                    map.setWalkable(x, y, true);
+                    map.setWalkable(y, x, true);
                 else if (SpriteResources.walkable == Walkable.NON_WALKABLE)
-                    map.setWalkable(x, y, false);
+                    map.setWalkable(y, x, false);
             }
         }
         notifyObserver("repaint");
@@ -58,6 +58,12 @@ public class MapPanelModel implements Observable {
             BufferedImage img = SpriteResources.pathToImage.get(obj.getPath());
             int dx = (img.getWidth() / 16) - 1;
             int dy = (img.getHeight() / 16) - 1;
+            if (dx <= 0) {
+                dx = 1;
+            }
+            if (dy <= 0) {
+                dy = 1;
+            }
 
             int nx = newObj.getX();
             int ny = newObj.getY();

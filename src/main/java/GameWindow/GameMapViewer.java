@@ -1,6 +1,7 @@
 package GameWindow;
 
 
+import Common.Observer;
 import Common.SpriteResources;
 import Game.GameForeground;
 
@@ -12,7 +13,7 @@ import java.awt.image.BufferedImage;
 /**
  * Created by skallalah on 09/05/17.
  */
-public class GameMapViewer extends JPanel {
+public class GameMapViewer extends JPanel implements Observer {
     public GameMapViewer(GameModel model) {
         gameModel_ = model;
         setBackground(Color.black);
@@ -66,10 +67,14 @@ public class GameMapViewer extends JPanel {
         g.setClip (x, y, 16, 16);
         BufferedImage image = SpriteResources.pathToImage
                 .get(gameModel_.getWorld().getCharacter().get_sprite());
-        g.drawImage(image, x, y, 48, 64, null);
+        g.drawImage(image, x - 16, y, 48, 64, null);
         g.setClip(oldClip);
     }
 
     private GameModel gameModel_;
 
+    @Override
+    public void update(String str) {
+
+    }
 }

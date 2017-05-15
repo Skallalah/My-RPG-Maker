@@ -104,15 +104,6 @@ public class EditorView extends JFrame implements Observer {
         ImageIcon select_b = getIcon("selection.png");
         selectButton = new JButton(select_b);
         toolBar.add(selectButton);
-        ImageIcon cut_b = getIcon("cut.png");
-        JButton cutButton = new JButton(cut_b);
-        toolBar.add(cutButton);
-        ImageIcon copy_b = getIcon("copy.png");
-        JButton copyButton = new JButton(copy_b);
-        toolBar.add(copyButton);
-        ImageIcon paste_b = getIcon("paste.png");
-        JButton pasteButton = new JButton(paste_b);
-        toolBar.add(pasteButton);
         ImageIcon remove_b = getIcon("eraser.png");
         removeButton = new JButton(remove_b);
         toolBar.add(removeButton);

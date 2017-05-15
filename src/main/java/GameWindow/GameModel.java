@@ -1,17 +1,19 @@
 package GameWindow;
 
+import Common.Observable;
+import Common.Observer;
 import Game.GameMap;
 import Game.GameWorld;
 
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 /**
  * Created by skallalah on 09/05/17.
  */
-public class GameModel {
+public class GameModel implements Observable {
     public GameModel(GameWorld world) {
         world_ = world;
-        current_map_ = world.getCharacter().get_map(world_);
     }
 
     public GameWorld getWorld() {
@@ -19,7 +21,7 @@ public class GameModel {
     }
 
     public GameMap getCurrent_map() {
-        return current_map_;
+        return world_.getCharacter().get_map(world_);
     }
 
     public void move_character(KeyEvent keyPressed) {
@@ -40,5 +42,21 @@ public class GameModel {
     }
 
     private GameWorld world_;
-    private GameMap current_map_;
+    private ArrayList<Observer> observerList = new ArrayList<>();
+
+    @Override
+    public void addObserver(Observer obs) {
+        observerList.add(obs);
+    }
+
+    @Override
+    public void notifyObserver(String str) {
+        for(Observer obs : observerList)
+            obs.update(str);
+    }
+
+    @Override
+    public void removeObserver() {
+        observerList = new ArrayList<>();
+    }
 }
