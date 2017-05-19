@@ -3,9 +3,14 @@ package MapPanel;
 import Common.EditorProperties;
 import Common.Executor;
 import Common.SpriteResources;
+import EventFrame.EventController;
+import EventFrame.EventModel;
+import EventFrame.EventView;
 
 import javax.swing.text.Position;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -23,13 +28,13 @@ public class MapPanelController {
             @Override
             public void mousePressed(MouseEvent e) {
                 Executor.executor.submit(() -> {
-                        clickAction(e.getX()/16, e.getY()/16);
+                        clickAction(e.getX() / 16, e.getY() / 16);
                 });
             }
             @Override
             public void mouseReleased(MouseEvent e) {
                 Executor.executor.submit(() -> {
-                    releaseAction(e.getX()/16, e.getY()/16);
+                    releaseAction(e.getX() / 16, e.getY() / 16);
                 });
             }
         });
@@ -38,8 +43,14 @@ public class MapPanelController {
             @Override
             public void mouseDragged(MouseEvent e) {
                 Executor.executor.submit(() -> {
-                    dragAction(e.getX()/16, e.getY()/16);
+                    dragAction(e.getX() / 16, e.getY() / 16);
                 });
+            }
+
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                model.setMouseOnPanel(new Point(e.getX() / 16, e.getY() / 16));
+                model.repaint();
             }
         });
     }
@@ -56,9 +67,12 @@ public class MapPanelController {
             model.select(x, y);
         else if (SpriteResources.selectedSprite.equals("player")) {
             EditorProperties.playerPosition = new Point(x, y);
+            EditorProperties.playerMapId = EditorProperties.currentMap.getId();
             model.repaint();
         } else if (SpriteResources.selectedSprite.equals("event")) {
-            model.addEvent();
+            EditorProperties.x = x;
+            EditorProperties.y = y;
+            eventAction();
         }
         else
             action(x, y);
@@ -76,5 +90,14 @@ public class MapPanelController {
     private void releaseAction(int x, int y) {
         if (SpriteResources.selectedSprite.equals("select"))
             model.release(x, y);
+    }
+
+    private void eventAction() {
+        Executor.executor.submit(() -> {
+            EventModel eventModel = new EventModel();
+            EventView eventView = new EventView(eventModel);
+            EventController eventController = new EventController(eventView, eventModel);
+            eventController.control();
+        });
     }
 }

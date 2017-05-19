@@ -5,6 +5,7 @@ import Common.Observable;
 import Common.Observer;
 import Common.SpriteResources;
 import Game.GameWorld;
+import MapPanel.MapPanelModel;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 
@@ -69,6 +70,7 @@ public class EditorModel implements Observable {
             else if (newWalkable == Walkable.NON_WALKABLE)
                 notifyObserver("nonwalkable");
             EditorProperties.walkable = newWalkable;
+            MapPanelModel.fillSelectionWithProperties(true);
         }
         else {
             notifyObserver("walkable_none");
@@ -92,6 +94,10 @@ public class EditorModel implements Observable {
 
     public void repaint() {
         notifyObserver("repaint");
+    }
+
+    public void errorOnPlayerPosition() {
+        notifyObserver("errorOnPlayerPosition");
     }
 
     @Override

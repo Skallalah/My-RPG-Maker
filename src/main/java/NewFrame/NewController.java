@@ -1,5 +1,7 @@
 package NewFrame;
 
+import Common.Executor;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -16,14 +18,18 @@ public class NewController {
         view.getSubmitbutton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                model.submitAction();
+                Executor.executor.submit(() -> {
+                    model.submitAction();
+                });
             }
         });
 
         view.getCancelbutton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                model.cancelAction();
+                Executor.executor.submit(() -> {
+                    model.cancelAction();
+                });
             }
         });
     }

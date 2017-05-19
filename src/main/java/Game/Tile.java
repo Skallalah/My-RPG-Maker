@@ -25,6 +25,15 @@ public class Tile {
         return path_img_;
     }
 
+    public void setPath_weather(String path) {
+        path_weather_ = path;
+    }
+
+    public String getPath_weather() {
+        return path_weather_;
+    }
+
     private boolean walkable_;
     private String path_img_;
+    private String path_weather_;
 }

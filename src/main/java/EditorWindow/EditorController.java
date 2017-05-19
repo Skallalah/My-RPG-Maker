@@ -1,10 +1,9 @@
 package EditorWindow;
 
-import Common.EditorProperties;
-import Common.Executor;
-import Common.History;
-import Common.Observer;
-import Common.SpriteResources;
+import Common.*;
+import EventFrame.EventController;
+import EventFrame.EventModel;
+import EventFrame.EventView;
 import Game.CharacterPersonalization.GameClass;
 import Game.GameCharacter;
 import Game.GameMap;
@@ -16,6 +15,10 @@ import MapPanel.MapPanelView;
 import NewFrame.NewController;
 import NewFrame.NewModel;
 import NewFrame.NewView;
+import com.sun.javafx.application.PlatformImpl;
+import javafx.application.Platform;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -28,13 +31,41 @@ import java.util.Hashtable;
 public class EditorController {
     private EditorModel model;
     private EditorView view;
+    private boolean ctrlPressed;
 
     public EditorController(EditorModel model, EditorView view){
         this.model = model;
         this.view = view;
+        ctrlPressed = false;
     }
 
     public void control(){
+
+        view.addKeyListener (new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.isControlDown() && e.getKeyCode() == KeyEvent.VK_Z) {
+                    Executor.executor.submit(() -> {
+                        History.undo();
+                        model.repaint();
+                    });
+                }
+                else if (e.isControlDown() && e.getKeyCode() == KeyEvent.VK_Y) {
+                    Executor.executor.submit(() -> {
+                        History.redo();
+                        model.repaint();
+                    });
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        });
 
         view.getNewButton().addActionListener(new ActionListener() {
             @Override
@@ -128,7 +159,7 @@ public class EditorController {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 Executor.executor.submit(() -> {
-                saveAction();
+                    saveAction();
                 });
             }
         });
@@ -187,13 +218,21 @@ public class EditorController {
             public void actionPerformed(ActionEvent actionEvent) {
                 Executor.executor.submit(() -> {
                     GameCharacter charac = new GameCharacter("player", "resources/sprites/npc/ninja.png", new GameClass("Rogue"));
-                    int currentIndex = EditorView.getMapPanel().getSelectedIndex();
-                    String title = EditorView.getMapPanel().getTitleAt(currentIndex);
-                    Hashtable<Integer, GameMap> maps = model.getCurrentWorld().getMaps();
-                    for(Integer id : maps.keySet())
-                        if (model.getCurrentWorld().getMap(id).getName().equals(title))
-                            charac.spawn_player(id, EditorProperties.playerPosition.x, EditorProperties.playerPosition.y);
 
+                    if (EditorProperties.playerPosition == null) {
+                        model.errorOnPlayerPosition();
+                        return;
+                    }
+                    int x = EditorProperties.playerPosition.x;
+                    int y = EditorProperties.playerPosition.y;
+                    int mapId = EditorProperties.playerMapId;
+                    GameMap map = model.getCurrentWorld().getMap(mapId);
+                    if (x < 0 || x > map.getWidth() - 1 || y < 0 || y > map.getHeight() - 1) {
+                        model.notifyObserver("errorOnPlayerPosition");
+                        return;
+                    }
+
+                    charac.spawn_player(mapId, x, y);
                     model.getCurrentWorld().setCharacter_(charac);
                     GameModel playModel = new GameModel(model.getCurrentWorld());
                     GameView view_ = new GameView(playModel);
@@ -223,12 +262,10 @@ public class EditorController {
                     EditorView.getMapPanel().remove(EditorView.getMapPanel().getSelectedComponent());
 
                     Hashtable<Integer, GameMap> maps = model.getCurrentWorld().getMaps();
-                    maps.values().remove(EditorProperties.mapToRender);
+                    maps.values().remove(EditorProperties.currentMap);
                 });
             }
         });
-
-
 
         view.getAddTileButton().addActionListener(new ActionListener() {
             @Override
@@ -256,6 +293,36 @@ public class EditorController {
                         File file = fileChooser.getSelectedFile();
                         view.getObjectModel().addImage(file.getPath());
                     }
+                });
+            }
+        });
+
+        view.getRainButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                Executor.executor.submit(() -> {
+                    EditorProperties.weatherTile = "resources/sprites/weather/rain.png";
+                    MapPanelModel.fillSelectionWithProperties(false);
+                });
+            }
+        });
+
+        view.getSnowButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                Executor.executor.submit(() -> {
+                    EditorProperties.weatherTile = "resources/sprites/weather/snow.png";
+                    MapPanelModel.fillSelectionWithProperties(false);
+                });
+            }
+        });
+
+        view.getSunButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                Executor.executor.submit(() -> {
+                    EditorProperties.weatherTile = null;
+                    MapPanelModel.fillSelectionWithProperties(false);
                 });
             }
         });

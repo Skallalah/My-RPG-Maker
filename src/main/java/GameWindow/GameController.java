@@ -14,20 +14,30 @@ public class GameController {
 
     public void control() {
         gameView_.addKeyListener(new KeyListener() {
+
             @Override
             public void keyTyped(KeyEvent keyEvent) {
                 System.out.println("Typed: " + keyEvent.getKeyCode());
+                if (keyEvent.getKeyCode() == 0) {
+                    gameModel_.interaction();
+                }
             }
 
             @Override
             public void keyPressed(KeyEvent keyEvent) {
-                gameModel_.move_character(keyEvent);
-                gameView_.paintView();
+                System.out.println("Pressed: " + keyEvent.getKeyCode());
+                if (keyEvent.getKeyCode() == 32) {
+                    gameModel_.interaction();
+                    return;
+                } else {
+                    gameModel_.move_character(keyEvent);
+                }
             }
 
             @Override
             public void keyReleased(KeyEvent keyEvent) {
                 System.out.println("Released: " + keyEvent.getKeyCode());
+                gameModel_.idle_state();
             }
         });
     }

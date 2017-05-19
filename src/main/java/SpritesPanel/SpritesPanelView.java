@@ -27,13 +27,13 @@ public class SpritesPanelView extends JPanel implements Observer {
         int y = 0;
         int maxy = 0;
         for (BufferedImage img : model.getImages()) {
-            if (x + img.getWidth() > 300) {
+            if (x + img.getWidth() > getWidth()) {
                 x = 0;
                 y = maxy + 16;
             }
             g.drawImage(img, x, y, null);
             x += img.getWidth() + 16;
-            maxy = max(maxy, img.getHeight());
+            maxy = max(maxy, y + img.getHeight());
         }
         setPreferredSize(new Dimension(0, maxy + 100));
     }

@@ -51,7 +51,7 @@ public class SpritesPanelController {
         int y = 0;
         int maxy = 0;
         for (BufferedImage img : model.getImages()) {
-            if (x + img.getWidth() > 300) {
+            if (x + img.getWidth() > view.getWidth()) {
                 x = 0;
                 y = maxy + 16;
             }
@@ -60,7 +60,7 @@ public class SpritesPanelController {
                 return SpriteResources.imageToPath.get(img);
 
             x += img.getWidth() + 16;
-            maxy = max(maxy, img.getHeight());
+            maxy = max(maxy, y + img.getHeight());
         }
         return null;
     }

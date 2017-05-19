@@ -8,9 +8,7 @@ public class Event {
     public enum Action {
         ADD_TILE,
         ADD_OBJECT,
-        RM_OBJECT,
-        SET_AS_WALKABLE,
-        SET_AS_NONWALKABLE
+        RM_OBJECT
     };
 
     public Action action;
@@ -19,6 +17,8 @@ public class Event {
     public int x;
     public int y;
     String oldPath;
+    boolean oldWalkable;
+    String oldWeatherPath;
 
     public Event(Action action, GameMap map, GameForeground object) {
         this.action = action;
@@ -32,5 +32,7 @@ public class Event {
         this.x = x;
         this.y = y;
         oldPath = map.getPathTile(x, y);
+        oldWalkable = map.isWalkable(x, y);
+        oldWeatherPath = map.getPathWeatherTile(x, y);
     }
 }

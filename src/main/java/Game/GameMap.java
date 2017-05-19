@@ -1,5 +1,8 @@
 package Game;
 
+import Common.SpriteResources;
+
+import java.awt.image.BufferedImage;
 import java.util.Vector;
 
 /**
@@ -9,6 +12,7 @@ public class GameMap {
     public GameMap(String name, int width, int height, String path_basic_tile) {
         name_ = name;
         objects_ = new Vector<>();
+        events_ = new Vector<>();
         width_ = width;
         height_ = height;
         map_ = new Vector<>();
@@ -52,7 +56,7 @@ public class GameMap {
     }
 
     public void setId(Integer id) {
-        this.id_ = id_;
+        this.id_ = id;
     }
 
     // Map modification of tiles
@@ -72,8 +76,49 @@ public class GameMap {
         return map_.get(y).get(x).getPath_img();
     }
 
+    public String getPathWeatherTile(int x, int y) {
+        return map_.get(y).get(x).getPath_weather();
+    }
+
+    public void setPathWeatherTile(int x, int y, String path) {
+        map_.get(y).get(x).setPath_weather(path);
+    }
+
     public Vector<GameForeground> getObjects() {
         return objects_;
+    }
+
+    public Vector<GameObject> getEvents() {
+        return events_;
+    }
+
+    // Script add
+
+    public void add_script(GameObject object) {
+        events_.add(object);
+    }
+
+    public GameObject has_script(int x, int y) {
+        /*if (((x < 0) || (x >= width_)) || ((y < 0) || (y >= height_))) {
+            return null;
+        }*/
+        for (GameObject g : events_) {
+            BufferedImage img = SpriteResources.pathToImage.get(g.get_sprite());
+            int x_ = g.getX();
+            int y_ = g.getY();
+            int dx = (img.getWidth() / 16) - 1;
+            int dy = (img.getHeight() / 16) - 1;
+            if (dx <= 0) {
+                dx = 0;
+            }
+            if (dy <= 0) {
+                dy = 0;
+            }
+            if (((x >= x_) && (x <= x_ + dx)) && ((y >= y_) && (y <= y_ + dy))) {
+                return g;
+            }
+        }
+        return null;
     }
 
     private Integer id_;
@@ -82,5 +127,5 @@ public class GameMap {
     private int height_;
     private Vector<GameForeground> objects_;
     private Vector<Vector<Tile>> map_;
-
+    private Vector<GameObject> events_;
 }

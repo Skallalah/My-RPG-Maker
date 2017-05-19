@@ -33,6 +33,7 @@ public class CheckBlock implements GameScript {
             default:
                 return false;
         }
+
     }
 
     public void setComp(compType comp) {

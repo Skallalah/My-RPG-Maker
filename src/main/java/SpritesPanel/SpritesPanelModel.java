@@ -1,15 +1,13 @@
 package SpritesPanel;
 
 import java.awt.*;
+import java.awt.Event;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import Common.EditorProperties;
-import Common.Observable;
-import Common.Observer;
-import Common.SpriteResources;
+import Common.*;
 import EditorWindow.EditorModel;
 import EditorWindow.EditorView;
 import EditorWindow.Walkable;
@@ -81,10 +79,12 @@ public class SpritesPanelModel implements Observable {
             int y = r.y / 16;
             int w = (r.width / 16) + x;
             int h = (r.height / 16) + y;
-            for (int i = x; i < w; i++) {
-                for (int j = y; j < h; j++) {
-                    EditorProperties.mapToRender.setPathTile(i, j, imagePath);
-                    EditorProperties.mapToRender.setWalkable(j, i, EditorProperties.walkable != Walkable.NON_WALKABLE);
+            for (int j = y; j < h; j++) {
+                for (int i = x; i < w; i++) {
+                    History.addEvent(new Common.Event(Common.Event.Action.ADD_TILE, EditorProperties.currentMap, i, j));
+                    EditorProperties.currentMap.setPathTile(i, j, imagePath);
+                    EditorProperties.currentMap.setWalkable(i, j, EditorProperties.walkable != Walkable.NON_WALKABLE);
+                    EditorProperties.currentMap.setPathWeatherTile(i, j, EditorProperties.weatherTile);
                 }
             }
             EditorProperties.selection = null;

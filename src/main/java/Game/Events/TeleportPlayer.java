@@ -7,11 +7,11 @@ import Game.GameWorld;
  * Created by colin_l on 5/14/17.
  */
 public class TeleportPlayer implements GameScript {
-    public TeleportPlayer() {
-        map_id_ = null;
-        id_ = null;
-        x_ = null;
-        y_ = null;
+    public TeleportPlayer(Integer mapId, Integer id, Integer x, Integer y) {
+        map_id_ = mapId;
+        id_ = id;
+        x_ = x;
+        y_ = y;
     }
 
     public void setX(Integer x) {
@@ -28,8 +28,25 @@ public class TeleportPlayer implements GameScript {
 
     @Override
     public boolean execute(GameWorld world) {
-        world.getCharacter().setX(x_);
-        world.getCharacter().setX(y_);
+        if (world.getMap(map_id_) == null) {
+            return false;
+        }
+        if (x_ > world.getMap(map_id_).getWidth()) {
+            return false;
+        }
+        if (y_ > world.getMap(map_id_).getHeight()) {
+            return false;
+        }
+        int x = x_;
+        int y = y_;
+        if (x_ < 0) {
+            x = 0;
+        }
+        if (y_ < 0) {
+            y = 0;
+        }
+        world.getCharacter().setX(x);
+        world.getCharacter().setY(y);
         world.getCharacter().setId_map_(map_id_);
         return true;
     }

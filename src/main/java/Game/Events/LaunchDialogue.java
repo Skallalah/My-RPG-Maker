@@ -1,5 +1,6 @@
 package Game.Events;
 
+import Game.GameDialogue;
 import Game.GameScript;
 import Game.GameWorld;
 
@@ -7,13 +8,13 @@ import Game.GameWorld;
  * Created by skallalah on 09/05/17.
  */
 public class LaunchDialogue implements GameScript {
-    public LaunchDialogue() {
-        id_dialogue_ = null;
+    public LaunchDialogue(GameDialogue dialogue) {
+        dialogue_ = dialogue;
     }
 
     @Override
     public boolean execute(GameWorld world) {
-        // Execute dialogue inside panel
+        world.add_dialogue(dialogue_.getContent());
         return true;
     }
 
@@ -26,5 +27,5 @@ public class LaunchDialogue implements GameScript {
     }
 
     private Integer id_;
-    private Integer id_dialogue_;
+    private GameDialogue dialogue_;
 }

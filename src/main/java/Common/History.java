@@ -24,10 +24,10 @@ public class History {
             event.action = Event.Action.ADD_OBJECT;
             addEventToRedoStack(event);
         } else if (event.action == Event.Action.ADD_TILE) {
-            String oldPath = event.map.getPathTile(event.x, event.y);
+            addEventToRedoStack(new Common.Event(Common.Event.Action.ADD_TILE, EditorProperties.currentMap, event.x, event.y));
             event.map.setPathTile(event.x, event.y, event.oldPath);
-            event.oldPath = oldPath;
-            addEventToRedoStack(event);
+            event.map.setPathWeatherTile(event.x, event.y, event.oldWeatherPath);
+            event.map.setWalkable(event.x, event.y, event.oldWalkable);
         }
     }
 
@@ -42,10 +42,10 @@ public class History {
             event.action = Event.Action.ADD_OBJECT;
             addEvent(event);
         } else if (event.action == Event.Action.ADD_TILE) {
-            String oldPath = event.map.getPathTile(event.x, event.y);
+            addEvent(new Common.Event(Common.Event.Action.ADD_TILE, EditorProperties.currentMap, event.x, event.y));
             event.map.setPathTile(event.x, event.y, event.oldPath);
-            event.oldPath = oldPath;
-            addEvent(event);
+            event.map.setPathWeatherTile(event.x, event.y, event.oldWeatherPath);
+            event.map.setWalkable(event.x, event.y, event.oldWalkable);
         }
     }
 

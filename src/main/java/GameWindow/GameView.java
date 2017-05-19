@@ -3,6 +3,7 @@ package GameWindow;
 import Common.Observer;
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * Created by skallalah on 09/05/17.
@@ -18,10 +19,7 @@ public class GameView extends JFrame implements Observer{
 
         map_panel.repaint();
         setVisible(true);
-    }
-
-    public void paintView() {
-        gameMapViewer_.repaint();
+        model.addObserver(this);
     }
 
     private GameMapViewer gameMapViewer_;
@@ -29,6 +27,5 @@ public class GameView extends JFrame implements Observer{
 
     @Override
     public void update(String str) {
-
     }
 }

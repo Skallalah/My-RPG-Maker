@@ -31,6 +31,9 @@ public class EditorView extends JFrame implements Observer {
     JButton removeButton;
     JButton walkableButton;
     JButton notwalkableButton;
+    JButton rainButton;
+    JButton snowButton;
+    JButton sunButton;
     JButton gridButton;
     JButton undoButton;
     JButton playButton;
@@ -75,18 +78,6 @@ public class EditorView extends JFrame implements Observer {
         editMenu.add(redoItem);
         menuBar.add(editMenu);
 
-        JMenu launchMenu = new JMenu("Game");
-        JMenuItem launchItem = new JMenuItem("Launch");
-        launchItem.add(launchMenu);
-        menuBar.add(launchMenu);
-
-        JMenu helpMenu = new JMenu("Help");
-        JMenuItem commandsItem = new JMenuItem("Commands");
-        JMenuItem moreItem = new JMenuItem("More");
-        helpMenu.add(commandsItem);
-        helpMenu.add(moreItem);
-        menuBar.add(helpMenu);
-
         JToolBar toolBar = new JToolBar();
         toolBar.setFloatable(false);
         toolBar.setLayout(new BoxLayout(toolBar, BoxLayout.X_AXIS));
@@ -123,6 +114,15 @@ public class EditorView extends JFrame implements Observer {
         ImageIcon notwalkable_b = getIcon("notwalkable.png");
         notwalkableButton = new JButton(notwalkable_b);
         toolBar.add(notwalkableButton);
+        ImageIcon rain_b = getIcon("rain.png");
+        rainButton = new JButton(rain_b);
+        toolBar.add(rainButton);
+        ImageIcon snow_b = getIcon("snow.png");
+        snowButton = new JButton(snow_b);
+        toolBar.add(snowButton);
+        ImageIcon sun_b = getIcon("sun.png");
+        sunButton = new JButton(sun_b);
+        toolBar.add(sunButton);
         ImageIcon grid_b = getIcon("grid.png");
         gridButton = new JButton(grid_b);
         toolBar.add(gridButton);
@@ -159,27 +159,7 @@ public class EditorView extends JFrame implements Observer {
         JScrollPane topLeftPanel2 = new JScrollPane(spritesPanelView2);
         topLeftPanel2.setPreferredSize(new Dimension(320, 200));
 
-        JSplitPane topLeft1 = new JSplitPane(JSplitPane.VERTICAL_SPLIT, topLeftPanel1, topLeftPanel2);
-        topLeft1.setResizeWeight(0.5);
-
-        SpritesPanelModel spritesPanelModel3 = new SpritesPanelModel("resources/sprites/npc", true);
-        SpritesPanelView spritesPanelView3 = new SpritesPanelView(spritesPanelModel3);
-        SpritesPanelController spritesPanelController3 = new SpritesPanelController(spritesPanelModel3, spritesPanelView3);
-        spritesPanelController3.control();
-        JScrollPane topLeftPanel3 = new JScrollPane(spritesPanelView3);
-        topLeftPanel3.setPreferredSize(new Dimension(320, 200));
-
-        SpritesPanelModel spritesPanelModel4 = new SpritesPanelModel("resources/sprites/teleporter", true);
-        SpritesPanelView spritesPanelView4 = new SpritesPanelView(spritesPanelModel4);
-        SpritesPanelController spritesPanelController4 = new SpritesPanelController(spritesPanelModel4, spritesPanelView4);
-        spritesPanelController4.control();
-        JScrollPane topLeftPanel4 = new JScrollPane(spritesPanelView4);
-        topLeftPanel4.setPreferredSize(new Dimension(320, 200));
-
-        JSplitPane topLeft2 = new JSplitPane(JSplitPane.VERTICAL_SPLIT, topLeftPanel3, topLeftPanel4);
-        topLeft2.setResizeWeight(0.5);
-
-        JSplitPane topLeftPanel = new JSplitPane(JSplitPane.VERTICAL_SPLIT, topLeft1, topLeft2);
+        JSplitPane topLeftPanel = new JSplitPane(JSplitPane.VERTICAL_SPLIT, topLeftPanel1, topLeftPanel2);
         topLeftPanel.setResizeWeight(0.5);
 
         MapsPanel mapsPanel = new MapsPanel(new DefaultMutableTreeNode("Maps"));
@@ -211,6 +191,7 @@ public class EditorView extends JFrame implements Observer {
         setJMenuBar(menuBar);
         setVisible(true);
 
+        requestFocus();
     }
 
     public void setCursor() {
@@ -299,6 +280,14 @@ public class EditorView extends JFrame implements Observer {
         System.exit(0);
     }
 
+    private void errorOnPlayerPosition() {
+        JFrame jframe = new JFrame();
+        JOptionPane.showMessageDialog(jframe,
+                "There is no player's spawn position.",
+                "Error on spawn position",
+                JOptionPane.ERROR_MESSAGE);
+    }
+
     public JButton getNewButton() {
         return newButton;
     }
@@ -311,6 +300,9 @@ public class EditorView extends JFrame implements Observer {
     public JButton getRemoveButton() { return removeButton; }
     public JButton getWalkableButton() { return walkableButton; }
     public JButton getNotwalkableButton() { return notwalkableButton; }
+    public JButton getRainButton() { return rainButton; }
+    public JButton getSnowButton() { return snowButton; }
+    public JButton getSunButton() { return sunButton; }
     public JButton getGridButton() { return gridButton; }
     public JButton getUndoButton() {
         return undoButton;
@@ -394,6 +386,9 @@ public class EditorView extends JFrame implements Observer {
         }
         else if (str.equals("exit")) {
             exit();
+        }
+        else if (str.equals("errorOnPlayerPosition")) {
+            errorOnPlayerPosition();
         }
     }
 

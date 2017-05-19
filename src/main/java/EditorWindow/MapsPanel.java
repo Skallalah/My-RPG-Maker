@@ -19,8 +19,6 @@ public class MapsPanel extends JTree{
         super(top);
         jtreePathToFilePath = new HashMap<>();
 
-        setPreferredSize(new Dimension(280,450));
-
         ImageIcon imageIcon = new ImageIcon(new ImageIcon("resources/icons/icon_wrld.png").getImage().getScaledInstance(18, 18,  java.awt.Image.SCALE_SMOOTH));
         DefaultTreeCellRenderer renderer = new DefaultTreeCellRenderer();
         renderer.setLeafIcon(imageIcon);

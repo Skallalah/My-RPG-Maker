@@ -12,14 +12,12 @@ import java.util.Hashtable;
 public class GameWorld {
     public GameWorld(String name) {
         maps_ = new Hashtable<>();
-        scripts_ = new Hashtable<>();
-        objects_ =  new Hashtable<>();
         variables_ = new Hashtable<>();
         name_ = name;
         id_map_ = 0;
-        id_script_ = 0;
-        id_objects_ = 0;
-        id_variables_ = 0;
+        id_variable_ = 0;
+        time_cycle_ = null;
+        current_dialogue_ = null;
     }
 
     public String getName() {
@@ -53,34 +51,26 @@ public class GameWorld {
         maps_.remove(id);
     }
 
-    //Script manipulation (by id)
-    public GameScript getScript(Integer id) {
-        return scripts_.get(id);
+    //Time cycle manipulation
+    public Integer getTime_cycle() {
+        return time_cycle_;
     }
 
-    public Integer addScript(GameScript script) {
-        script.setId(id_script_);
-        scripts_.put(id_script_++, script);
-        return id_script_;
+    public void setTime_cycle(Integer time) {
+        this.time_cycle_ = time;
     }
 
-    public void deleteScript(Integer id) {
-        scripts_.remove(id);
+    //Dialogue Manipulation
+    public boolean in_dialogue() {
+        return (current_dialogue_ != null);
     }
 
-    //Object manipulation (by id)
-    public GameObject getObject(Integer id) {
-        return objects_.get(id);
+    public void end_dialogue()  {
+        current_dialogue_ = null;
     }
 
-    public Integer addObject(GameObject object) {
-        object.setId(id_objects_);
-        objects_.put(id_objects_++, object);
-        return id_objects_;
-    }
-
-    public void deleteObject(Integer id) {
-        objects_.remove(id);
+    public void add_dialogue(String dialogue) {
+        current_dialogue_ = dialogue;
     }
 
     //Variable manipulation (by id)
@@ -88,28 +78,31 @@ public class GameWorld {
         return variables_.get(id);
     }
 
-    public Integer addVariable(GameVariable variable) {
-        variable.setId(id_variables_);
-        variables_.put(id_variables_++, variable);
-        return id_variables_;
+    public Hashtable<Integer, GameVariable> getVariables() {
+        return variables_;
+    }
+
+    public Integer addVariable(GameVariable var) {
+        var.setId(id_variable_);
+        variables_.put(id_variable_++, var);
+        return id_variable_;
     }
 
     public void deleteVariable(Integer id) {
         variables_.remove(id);
     }
 
+    // Attributes
     private String name_;
 
     private GameCharacter character_;
 
     private Integer id_map_;
-    private Integer id_script_;
-    private Integer id_objects_;
-    private Integer id_variables_;
+    private Integer id_variable_;
 
     private Hashtable<Integer, GameMap> maps_;
-    private Hashtable<Integer, GameScript> scripts_;
-    private Hashtable<Integer, GameObject> objects_;
     private Hashtable<Integer, GameVariable> variables_;
+    private Integer time_cycle_;
+    private String current_dialogue_;
 
 }
