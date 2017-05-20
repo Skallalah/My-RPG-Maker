@@ -7,7 +7,10 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Hashtable;
+import java.util.Iterator;
 
 import Common.Executor;
 import Common.Observer;
@@ -212,7 +215,10 @@ public class EditorView extends JFrame implements Observer {
 
     private void addAllMaps() {
         Hashtable<Integer, GameMap> maps = model.getCurrentWorld().getMaps();
-        for (GameMap map : maps.values()) {
+        ArrayList<GameMap> list = new ArrayList<>(maps.values());
+
+        for (int i = list.size()-1; i >= 0; i--) {
+            GameMap map = list.get(i);
             MapPanelModel mapPanelModel = new MapPanelModel(map);
             MapPanelView mapPanelView = new MapPanelView(mapPanelModel);
             MapPanelController mapPanelController = new MapPanelController(mapPanelModel, mapPanelView);
@@ -349,7 +355,6 @@ public class EditorView extends JFrame implements Observer {
     public SpritesPanelModel getTileModel() { return spritesPanelModel1; }
     public SpritesPanelModel getObjectModel() { return spritesPanelModel2; }
     public static JTabbedPane getMapPanel() { return rightPanel; }
-   // public Component getRightPanel() { return rightPanel.getSelectedComponent(); }
 
     @Override
     public void update(String str) {

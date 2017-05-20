@@ -1,9 +1,6 @@
 package EditorWindow;
 
 import Common.*;
-import EventFrame.EventController;
-import EventFrame.EventModel;
-import EventFrame.EventView;
 import Game.CharacterPersonalization.GameClass;
 import Game.GameCharacter;
 import Game.GameMap;
@@ -11,32 +8,22 @@ import GameWindow.GameController;
 import GameWindow.GameModel;
 import GameWindow.GameView;
 import MapPanel.MapPanelModel;
-import MapPanel.MapPanelView;
 import NewFrame.NewController;
 import NewFrame.NewModel;
 import NewFrame.NewView;
-import com.sun.javafx.application.PlatformImpl;
-import javafx.application.Platform;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.*;
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.HashMap;
 import java.util.Hashtable;
 
 public class EditorController {
     private EditorModel model;
     private EditorView view;
-    private boolean ctrlPressed;
 
     public EditorController(EditorModel model, EditorView view){
         this.model = model;
         this.view = view;
-        ctrlPressed = false;
     }
 
     public void control(){

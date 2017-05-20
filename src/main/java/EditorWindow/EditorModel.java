@@ -3,7 +3,6 @@ package EditorWindow;
 import Common.EditorProperties;
 import Common.Observable;
 import Common.Observer;
-import Common.SpriteResources;
 import Game.GameWorld;
 import MapPanel.MapPanelModel;
 import com.google.gson.Gson;
