@@ -80,6 +80,11 @@ public class EditorModel implements Observable {
         notifyObserver("repaint");
     }
 
+    public void newProject() {
+        notifyObserver("removeAllTabs");
+        setCurrentWorld(new GameWorld("New world"));
+    }
+
     public void exit() {
         notifyObserver("exit");
     }

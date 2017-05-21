@@ -124,7 +124,10 @@ public class EditorController {
         view.getNewMenuItem().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                newAction();
+                Executor.executor.submit(() -> {
+                    model.newProject();
+                    newAction();
+                });
             }
         });
 
