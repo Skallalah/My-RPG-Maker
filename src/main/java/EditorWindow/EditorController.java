@@ -20,10 +20,12 @@ import java.util.Hashtable;
 public class EditorController {
     private EditorModel model;
     private EditorView view;
+    private boolean ctrlPressed;
 
     public EditorController(EditorModel model, EditorView view){
         this.model = model;
         this.view = view;
+        ctrlPressed = false;
     }
 
     public void control(){
@@ -138,6 +140,28 @@ public class EditorController {
             public void actionPerformed(ActionEvent actionEvent) {
                 Executor.executor.submit(() -> {
                     model.exit();
+                });
+            }
+        });
+
+        view.getSearchButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                Executor.executor.submit(() -> {
+                    String strEntered = view.getBarField().getText();
+                    if (view.getBackgroundCheck().isSelected())
+                        view.spritesPanelModel1.updateImages(strEntered);
+                    else {
+                        view.spritesPanelModel1.load();
+                        view.spritesPanelModel1.notifyObserver("repaint");
+                    }
+
+                    if (view.getForegroundCheck().isSelected())
+                        view.spritesPanelModel2.updateImages(strEntered);
+                    else {
+                        view.spritesPanelModel2.load();
+                        view.spritesPanelModel2.notifyObserver("repaint");
+                    }
                 });
             }
         });

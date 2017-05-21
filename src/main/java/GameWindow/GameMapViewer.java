@@ -8,6 +8,8 @@ import Game.GameObject;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.text.Position;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -29,6 +31,7 @@ public class GameMapViewer extends JPanel implements Observer, ActionListener {
                 gameModel_.getCurrent_map().getHeight() * 16));
 
         timer.start();
+        inventory = false;
     }
 
     public void paintComponent(Graphics g) {
@@ -43,11 +46,13 @@ public class GameMapViewer extends JPanel implements Observer, ActionListener {
         drawWeather(g);
         drawNight(g);
         drawBorders(g);
+        paintInventory(g);
         if (gameModel_.getWorld().in_dialogue()) {
             g.translate(-(this.getSize().width / 2 - gameModel_.getWorld().getCharacter().getX() * 16),
                     -(this.getSize().height / 2 - gameModel_.getWorld().getCharacter().getY() * 16));
             paintDialogue(g, "d");
         }
+
     }
 
     private void drawTiles(Graphics g) {
@@ -154,10 +159,39 @@ public class GameMapViewer extends JPanel implements Observer, ActionListener {
     }
     private void paintDialogue(Graphics g, String dialogue) {
         Graphics2D g2 = (Graphics2D) g;
+        String text = gameModel_.getWorld().getCurrent_dialogue();
         g2.setColor(new Color(53, 53, 223, 255));
         g2.fill(new Rectangle(0, this.getHeight()/2 + 200, this.getWidth(), this.getHeight()/2 + 200));
         g2.setColor(new Color(30, 34, 199, 185));
         g2.fill(new Rectangle(20, this.getHeight()/2 + 220, this.getWidth() - 40, this.getHeight()/2 + 220));
+        g2.setColor(new Color(255, 255, 255, 185));
+        int i = 40;
+        g2.setFont(new Font("TimesRoman", Font.PLAIN, i));
+        while (g2.getFontMetrics().stringWidth(text) >= this.getWidth() - 80) {
+            g2.setFont(new Font("TimesRoman", Font.PLAIN, i--));
+        }
+        g2.drawString(gameModel_.getWorld().getCurrent_dialogue(), 40, this.getHeight()/2 + 400);
+    }
+
+
+    private void paintInventory(Graphics g) {
+        if (inventory) {
+            Point posPlayer = new Point(gameModel_.getWorld().getCharacter().getX()*16,gameModel_.getWorld().getCharacter().getY()*16);
+            Graphics2D g2 = (Graphics2D) g;
+            File folder = new File("resources/utils/inventory.png");
+
+            BufferedImage img = null;
+            try {
+                img = ImageIO.read(folder);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            int widthInventory = 500;
+            int heightInventory = 500;
+            g.drawImage(img, posPlayer.x - widthInventory / 2, posPlayer.y - heightInventory / 2, widthInventory, heightInventory, null);
+
+
+        }
     }
 
 
@@ -174,16 +208,21 @@ public class GameMapViewer extends JPanel implements Observer, ActionListener {
         int dy = gameModel_.getCurrent_map().getHeight() * 16;
         g2.fill(new Rectangle(dx, 0, 1000, dy + 1000));
         g2.fill(new Rectangle(0, dy, dx + 1000, 1000));
+
     }
 
     private GameModel gameModel_;
     Timer timer=new Timer(16, this);
+    private boolean inventory;
 
     @Override
     public void update(String str) {
         if (str.equals("repaint")) {
             revalidate();
             repaint();
+        }
+        else if (str.equals("inventory")) {
+            inventory = !inventory;
         }
     }
 }

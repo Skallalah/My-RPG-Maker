@@ -6,6 +6,7 @@ import Game.CharacterPersonalization.GameClass;
  * Created by skallalah on 06/05/17.
  */
 public class GameCharacter {
+
     public GameCharacter(String name, String sprite, GameClass gameclass) {
         name_ = name;
         path_img_sprite_ = sprite;
@@ -79,6 +80,7 @@ public class GameCharacter {
         }
         return false;
     }
+
 
     public void next_state() {
         state_ = (state_ + 1) % 3;

@@ -14,9 +14,15 @@ import java.util.ArrayList;
  * Created by skallalah on 09/05/17.
  */
 public class GameModel implements Observable {
+    public boolean speedForce;
+
     public GameModel(GameWorld world) {
         world_ = world;
+        this.speedForce = false;
     }
+
+
+
 
     public GameWorld getWorld() {
         return world_;
@@ -31,22 +37,33 @@ public class GameModel implements Observable {
             return;
         }
         world_.getCharacter().next_state();
+        if (keyPressed.getKeyCode() == 83) {
+            speedForce = !speedForce;
+        }
         if (keyPressed.getKeyCode() == 38) {
             world_.getCharacter().setCur_direction_(GameCharacter.direction.UP);
+            if (speedForce)
+                world_.getCharacter().moveUp(world_);
             world_.getCharacter().moveUp(world_);
         }
         else if (keyPressed.getKeyCode() == 39) {
             world_.getCharacter().setCur_direction_(GameCharacter.direction.RIGHT);
+            if (speedForce)
+                world_.getCharacter().moveRight(world_);
             world_.getCharacter().moveRight(world_);
         }
         else if (keyPressed.getKeyCode() == 37) {
             world_.getCharacter().setCur_direction_(GameCharacter.direction.LEFT);
+            if (speedForce)
+                world_.getCharacter().moveLeft(world_);
             world_.getCharacter().moveLeft(world_);
         }
         else if (keyPressed.getKeyCode() == 40) {
             world_.getCharacter().setCur_direction_(GameCharacter.direction.DOWN);
+            if (speedForce)
+                world_.getCharacter().moveDown(world_);
             world_.getCharacter().moveDown(world_);
-        } else {
+        }  else {
             System.out.println("STOP");
             return;
         }
@@ -87,6 +104,11 @@ public class GameModel implements Observable {
         }
         notifyObserver("dialogue");
     }
+
+    public void inventory() {
+        notifyObserver("inventory");
+    }
+
 
     private GameWorld world_;
     private ArrayList<Observer> observerList = new ArrayList<>();

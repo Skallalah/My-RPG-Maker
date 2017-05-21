@@ -69,6 +69,10 @@ public class GameWorld {
         current_dialogue_ = null;
     }
 
+    public String getCurrent_dialogue() {
+        return current_dialogue_;
+    }
+
     public void add_dialogue(String dialogue) {
         current_dialogue_ = dialogue;
     }

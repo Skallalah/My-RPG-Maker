@@ -7,10 +7,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Hashtable;
-import java.util.Iterator;
 
 import Common.Executor;
 import Common.Observer;
@@ -46,6 +43,10 @@ public class EditorView extends JFrame implements Observer {
     JButton addObjectButton;
     JButton eventButton;
     JButton exitButton;
+    JButton searchButton;
+    JTextField barField;
+    JCheckBox backgroundCheck;
+    JCheckBox foregroundCheck;
     JMenuItem newItem;
     JMenuItem openItem;
     JMenuItem saveItem;
@@ -168,7 +169,24 @@ public class EditorView extends JFrame implements Observer {
         MapsPanel mapsPanel = new MapsPanel(new DefaultMutableTreeNode("Maps"));
         JScrollPane bottomLeftPanel = new JScrollPane(mapsPanel);
 
-        JSplitPane leftPanel = new JSplitPane(JSplitPane.VERTICAL_SPLIT, topLeftPanel, bottomLeftPanel);
+        JPanel searchbar = new JPanel();
+        searchbar.setLayout(new GridLayout(2, 2));
+
+        searchButton = new JButton("Search");
+        searchbar.add(searchButton);
+
+        barField = new JTextField();
+        searchbar.add(barField);
+
+        backgroundCheck = new JCheckBox("Background Tiles");
+        searchbar.add(backgroundCheck);
+        foregroundCheck = new JCheckBox("Foreground Tiles");
+        searchbar.add(foregroundCheck);
+
+
+
+        JSplitPane spritePanelLeft = new JSplitPane(JSplitPane.VERTICAL_SPLIT, searchbar, topLeftPanel);
+        JSplitPane leftPanel = new JSplitPane(JSplitPane.VERTICAL_SPLIT, spritePanelLeft, bottomLeftPanel);
         leftPanel.setResizeWeight(0.7);
 
         rightPanel = new JTabbedPane();
@@ -215,10 +233,7 @@ public class EditorView extends JFrame implements Observer {
 
     private void addAllMaps() {
         Hashtable<Integer, GameMap> maps = model.getCurrentWorld().getMaps();
-        ArrayList<GameMap> list = new ArrayList<>(maps.values());
-
-        for (int i = list.size()-1; i >= 0; i--) {
-            GameMap map = list.get(i);
+        for (GameMap map : maps.values()) {
             MapPanelModel mapPanelModel = new MapPanelModel(map);
             MapPanelView mapPanelView = new MapPanelView(mapPanelModel);
             MapPanelController mapPanelController = new MapPanelController(mapPanelModel, mapPanelView);
@@ -294,6 +309,10 @@ public class EditorView extends JFrame implements Observer {
                 JOptionPane.ERROR_MESSAGE);
     }
 
+    private void searchAction() {
+
+    }
+
     public JButton getNewButton() {
         return newButton;
     }
@@ -334,9 +353,11 @@ public class EditorView extends JFrame implements Observer {
     public JButton getExitButton() {
         return exitButton;
     }
-    public JMenuItem getNewMenuItem() {
-        return newItem;
-    }
+    public JButton getSearchButton() { return searchButton; }
+    public JTextField getBarField() { return barField; }
+    public JCheckBox getBackgroundCheck() { return backgroundCheck; }
+    public JCheckBox getForegroundCheck() { return foregroundCheck; }
+    public JMenuItem getNewMenuItem() { return newItem; }
     public JMenuItem getOpenMenuItem() {
         return openItem;
     }
@@ -355,6 +376,7 @@ public class EditorView extends JFrame implements Observer {
     public SpritesPanelModel getTileModel() { return spritesPanelModel1; }
     public SpritesPanelModel getObjectModel() { return spritesPanelModel2; }
     public static JTabbedPane getMapPanel() { return rightPanel; }
+   // public Component getRightPanel() { return rightPanel.getSelectedComponent(); }
 
     @Override
     public void update(String str) {
@@ -394,6 +416,9 @@ public class EditorView extends JFrame implements Observer {
         }
         else if (str.equals("errorOnPlayerPosition")) {
             errorOnPlayerPosition();
+        }
+        else if (str.equals("search")) {
+            searchAction();
         }
     }
 

@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import Common.*;
 import EditorWindow.EditorModel;
@@ -22,9 +23,12 @@ public class SpritesPanelModel implements Observable {
 
     public ArrayList<BufferedImage> images = new ArrayList<>();
     private boolean foregroundSprites;
+    private HashMap<String, File> pathImages = new HashMap<>();
+    public String path;
 
     public SpritesPanelModel(String path, boolean foregroundSprites) {
         this.foregroundSprites = foregroundSprites;
+        this.path = path;
         loadSprites(path);
     }
     public boolean isForegroundSprite() {
@@ -34,6 +38,11 @@ public class SpritesPanelModel implements Observable {
         return images;
     }
 
+    public void load() {
+        images = new ArrayList<>();
+        loadSprites(path);
+    }
+
     private void loadSprites(String path) {
         File folder = new File(path);
         for(File fileEntry : folder.listFiles())
@@ -41,6 +50,7 @@ public class SpritesPanelModel implements Observable {
                 try {
                     BufferedImage img = ImageIO.read(fileEntry);
                     if (img.getHeight() % 16 == 0 && img.getWidth() % 16 == 0) {
+                        pathImages.put(fileEntry.getName(), fileEntry);
                         images.add(img);
                         String imagePath = fileEntry.getPath().replace("\\", "/");
                         SpriteResources.imageToPath.put(img, imagePath);
@@ -89,8 +99,38 @@ public class SpritesPanelModel implements Observable {
             }
             EditorProperties.selection = null;
             SpriteResources.selectedSprite = null;
-            EditorModel.getSelf().notifyObserver("repaint");
+            notifyObserver("repaint");
         }
+    }
+
+    public void updateImages(String wordEntered) {
+        images = new ArrayList<>();
+        if (wordEntered.equals("")) {
+            loadSprites(path);
+        }
+        else {
+            notifyObserver("clear");
+            wordEntered = wordEntered + ".png";
+            for (String wordStocked : pathImages.keySet()) {
+                if (wordEntered.equals(wordStocked)) {
+                    System.out.println(wordStocked);
+                    try {
+                        BufferedImage img = ImageIO.read(pathImages.get(wordStocked));
+                        if (img.getHeight() % 16 == 0 && img.getWidth() % 16 == 0) {
+                            pathImages.put(pathImages.get(wordStocked).getName(), pathImages.get(wordStocked));
+                            images.add(img);
+                            String imagePath = pathImages.get(wordStocked).getPath().replace("\\", "/");
+                            SpriteResources.imageToPath.put(img, imagePath);
+                            SpriteResources.pathToImage.put(imagePath, img);
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+        notifyObserver("repaint");
+
     }
 
     @Override
