@@ -40,7 +40,7 @@ public class EventView extends JFrame implements Observer{
         getFiles("resources", sprites);
         panel.add(sprites);
 
-        String[] eventChoices = {"Teleport", "Dialog"};
+        String[] eventChoices = {"[TELEPORTER] Teleport", "[NPC] Dialog"};
         events = new JComboBox(eventChoices);
         panel.add(events);
 

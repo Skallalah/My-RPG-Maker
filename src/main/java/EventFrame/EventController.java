@@ -52,13 +52,13 @@ public class EventController {
                     String eventType = eventView.getEvents().getSelectedItem().toString();
                     TeleportPlayer teleportScript = null;
                     LaunchDialogue dialogScript = null;
-                    if (eventType.equals("Teleport")) {
+                    if (eventType.equals("TELEPORTER] Teleport")) {
                         Integer x = Integer.parseInt(eventView.getPosX().getText());
                         Integer y = Integer.parseInt(eventView.getPosY().getText());
                         Integer mapId = Integer.parseInt(eventView.getMapId().getText());
                         teleportScript = new TeleportPlayer(mapId, 0, x, y);
                     }
-                    else if (eventType.equals("Dialog")) {
+                    else if (eventType.equals("[NPC] Dialog")) {
                         String dialog = eventView.getDialog().getText();
                         dialogScript = new LaunchDialogue(new GameDialogue(dialog));
                     }
