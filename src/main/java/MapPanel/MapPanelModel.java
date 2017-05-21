@@ -19,6 +19,8 @@ import EditorWindow.EditorModel;
 import EditorWindow.Walkable;
 import Game.GameForeground;
 import Game.GameMap;
+import Game.GameObject;
+import Game.GameScript;
 
 public class MapPanelModel implements Observable {
     private ArrayList<Observer> observerList = new ArrayList<>();
@@ -125,6 +127,22 @@ public class MapPanelModel implements Observable {
                 History.addEvent(new Event(Event.Action.RM_OBJECT, map, obj));
             }
         }
+
+        Vector<GameObject> events = map.getEvents();
+        for (GameObject evt : events) {
+            String path = evt.get_sprite().replace("\\", "/");;
+            BufferedImage img = SpriteResources.pathToImage.get(path);
+
+            int ox = evt.getX();
+            int oy = evt.getY();
+            int dx = img.getWidth() / 16;
+            int dy = img.getHeight() / 16;
+
+            if (x >= ox && x <= ox + dx && y >= oy && y <= oy + dy) {
+                events.remove(evt);
+            }
+        }
+
         notifyObserver("repaint");
     }
 

@@ -63,13 +63,13 @@ public class EventController {
                         dialogScript = new LaunchDialogue(new GameDialogue(dialog));
                     }
                     String actionType = eventView.getActions().getSelectedItem().toString();
-                    if (eventType.equals("On touch")) {
+                    if (actionType.equals("On touch")) {
                         if (teleportScript != null)
                             obj.set_touch(teleportScript);
                         else
                             obj.set_touch(dialogScript);
                     }
-                    else if (eventType.equals("On action")) {
+                    else if (actionType.equals("On action")) {
                         if (teleportScript != null)
                             obj.set_interaction(teleportScript);
                         else
