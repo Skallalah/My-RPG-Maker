@@ -33,9 +33,9 @@ public class EventController {
             public void actionPerformed(ActionEvent actionEvent) {
                 Executor.executor.submit(() -> {
                     String event = (String) eventView.getEvents().getSelectedItem();
-                    if (event.equals("Teleport"))
+                    if (event.equals("[TELEPORTER] Teleport"))
                         eventModel.teleport();
-                    else if (event.equals("Dialog"))
+                    else if (event.equals("[NPC] Dialog"))
                         eventModel.dialog();
                 });
             }
@@ -52,7 +52,7 @@ public class EventController {
                     String eventType = eventView.getEvents().getSelectedItem().toString();
                     TeleportPlayer teleportScript = null;
                     LaunchDialogue dialogScript = null;
-                    if (eventType.equals("TELEPORTER] Teleport")) {
+                    if (eventType.equals("[TELEPORTER] Teleport")) {
                         Integer x = Integer.parseInt(eventView.getPosX().getText());
                         Integer y = Integer.parseInt(eventView.getPosY().getText());
                         Integer mapId = Integer.parseInt(eventView.getMapId().getText());

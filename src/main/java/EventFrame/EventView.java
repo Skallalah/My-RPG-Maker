@@ -25,6 +25,7 @@ public class EventView extends JFrame implements Observer{
     JTextField positionX;
     JTextField positionY;
     JTextField dialog;
+    JTextField name;
     JPanel panel;
 
     public EventView(EventModel eventModel) {
@@ -66,6 +67,10 @@ public class EventView extends JFrame implements Observer{
         dialog = new JTextField();
         dialog.setColumns(30);
         dialog.setText("Dialog");
+
+        name = new JTextField();
+        name.setColumns(30);
+        name.setText("NPC's name");
 
         submitButton = new JButton("Done");
         panel.add(submitButton);
@@ -149,6 +154,7 @@ public class EventView extends JFrame implements Observer{
         panel.add(actions);
 
         panel.add(dialog);
+        panel.add(name);
 
         panel.add(submitButton);
         panel.add(cancelButton);
