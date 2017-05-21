@@ -25,7 +25,7 @@ public class MapsPanel extends JTree{
 
         setCellRenderer(renderer);
 
-        loadMaps(top, "resources/maps");
+        loadMaps(top, "tests/worlds");
 
         MouseListener ml = new MouseAdapter() {
             public void mousePressed(MouseEvent e) {

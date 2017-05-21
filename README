@@ -21,8 +21,19 @@ The game engine will have several core features such as :
   - Player handling
   - NPC handling
 
+Each of these two parts have additionnal features.
 
-Each of these two parts will have additionnal features.
+To compile :
+  Type "gradle build"
+
+To run :
+  Type "java -jar build/libs/MyRPGMaker.jar"
+
+In game :
+  Use arrows to navigate
+  Use e to toogle inventory
+  Use s to toogle speed
+  Use space to toogle dialog
 
 *************************************************************************
 *************************************************************************

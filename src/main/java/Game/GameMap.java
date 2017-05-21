@@ -103,19 +103,24 @@ public class GameMap {
             return null;
         }*/
         for (GameObject g : events_) {
-            BufferedImage img = SpriteResources.pathToImage.get(g.get_sprite());
-            int x_ = g.getX();
-            int y_ = g.getY();
-            int dx = (img.getWidth() / 16) - 1;
-            int dy = (img.getHeight() / 16) - 1;
-            if (dx <= 0) {
-                dx = 0;
-            }
-            if (dy <= 0) {
-                dy = 0;
-            }
-            if (((x >= x_) && (x <= x_ + dx)) && ((y >= y_) && (y <= y_ + dy))) {
-                return g;
+            String path = g.get_sprite();
+            BufferedImage img = SpriteResources.pathToImage.get(path);
+            if (img == null)
+                SpriteResources.addImage(path);
+            else {
+                int x_ = g.getX();
+                int y_ = g.getY();
+                int dx = (img.getWidth() / 16) - 1;
+                int dy = (img.getHeight() / 16) - 1;
+                if (dx <= 0) {
+                    dx = 0;
+                }
+                if (dy <= 0) {
+                    dy = 0;
+                }
+                if (((x >= x_) && (x <= x_ + dx)) && ((y >= y_) && (y <= y_ + dy))) {
+                    return g;
+                }
             }
         }
         return null;

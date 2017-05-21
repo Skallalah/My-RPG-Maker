@@ -1,6 +1,8 @@
 package GameWindow;
 
 import javax.sound.sampled.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
@@ -17,11 +19,24 @@ public class GameController {
     }
 
     public void control() {
-        gameView_.addKeyListener(new KeyListener() {
 
+        gameView_.getPlayButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                gameView_.playGame();
+            }
+        });
+
+        gameView_.getCancelButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                gameView_.cancelGame();
+            }
+        });
+
+        gameView_.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent keyEvent) {
-                System.out.println("Typed: " + keyEvent.getKeyCode());
                 if (keyEvent.getKeyCode() == 0) {
                     gameModel_.interaction();
                 }
@@ -29,7 +44,6 @@ public class GameController {
 
             @Override
             public void keyPressed(KeyEvent keyEvent) {
-                System.out.println("Pressed: " + keyEvent.getKeyCode());
                 if (keyEvent.getKeyCode() == 32) {
                     gameModel_.interaction();
                     return;
@@ -43,9 +57,10 @@ public class GameController {
 
             @Override
             public void keyReleased(KeyEvent keyEvent) {
-                System.out.println("Released: " + keyEvent.getKeyCode());
                 gameModel_.idle_state();
             }
+
+
         });
     }
 

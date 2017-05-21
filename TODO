@@ -2,22 +2,38 @@ My RPG Maker:
 
   TODO:
     EDITOR:
-      - MVC pattern (+ Observer design pattern)
-      - General Interface
-      - Multithreading (ExecutorService ou SwingWorker)
-      - Loading of sprites (type and error checking)
+      - MVC pattern (+ Observer design pattern)           [DONE]
+      - General Interface                                 [DONE]
+      - Multithreading (ExecutorService or SwingWorker)   [DONE]
+      - Loading of sprites (type and error checking)      [DONE]
           (Multiple 16, not image, type walkable)
-      - World files design
-      - World files save and open features
-      - Basic tools for placement and selection
-      - Handling of several maps
-      - Handling of history
+      - World files design                                [DONE]
+      - World files save and open features                [DONE]
+      - Basic tools for placement and selection           [DONE]
+      - Handling of several maps                          [DONE]
+      - Handling of history                               [DONE]
 
     GAME ENGINE:
-      - Map display
-      - Player handling
-      - NPCs handling
+      - Map display                                       [DONE]
+      - Player handling                                   [DONE]
+      - NPCs handling                                     [DONE]
 
     + Additionnal features
-
-  DONE:
+        - Circadian cycle
+        - Conditional weather
+        - Weather
+        - Inventory
+        - Scrolling
+        - Starting Menu
+        - Search by tile name
+        - Nice display of directories of maps
+        - Splash screen
+        - Scroll large map
+        - Game Speed
+        - Mouse Coordinates
+        - Invalid World Files
+        - Shortcut
+        - Valid position display
+        - Foreground object on the edge of the map
+        - Game Speed
+        - Debug Mode

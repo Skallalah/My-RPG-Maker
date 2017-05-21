@@ -127,18 +127,16 @@ public class MapPanelView extends JPanel implements Observer {
 
     private void drawEvents(Graphics g) {
         for (GameObject obj : model.map.getEvents()) {
-            String path = obj.get_sprite().replace("\\", "/");
+            String path = obj.get_sprite();
             BufferedImage image = SpriteResources.pathToImage.get(path);
-            if (image == null) {
+            if (image == null)
                 SpriteResources.addImage(path);
-                image = SpriteResources.pathToImage.get(path);
-            }
             g.drawImage(image, obj.getX() * 16, obj.getY() * 16, null);
         }
     }
 
     private void drawPlayer(Graphics g) {
-        String path = "resources/sprites/foregroundObject/player.png";
+        String path = "resources/player/player.png";
         BufferedImage img = SpriteResources.pathToImage.get(path);
         if (img == null) {
             SpriteResources.addImage(path);

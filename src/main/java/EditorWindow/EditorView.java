@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Hashtable;
 
 import Common.Executor;
@@ -29,6 +30,7 @@ public class EditorView extends JFrame implements Observer {
     JButton moveButton;
     JButton selectButton;
     JButton removeButton;
+    JButton tileEraserButton;
     JButton walkableButton;
     JButton notwalkableButton;
     JButton rainButton;
@@ -103,6 +105,9 @@ public class EditorView extends JFrame implements Observer {
         ImageIcon remove_b = getIcon("eraser.png");
         removeButton = new JButton(remove_b);
         toolBar.add(removeButton);
+        ImageIcon remove_tile_b = getIcon("tile-eraser.png");
+        tileEraserButton = new JButton(remove_tile_b);
+        toolBar.add(tileEraserButton);
         ImageIcon undo_b = getIcon("undo.png");
         undoButton = new JButton(undo_b);
         toolBar.add(undoButton);
@@ -149,14 +154,14 @@ public class EditorView extends JFrame implements Observer {
 
         add(toolBar, BorderLayout.NORTH);
 
-        spritesPanelModel1 = new SpritesPanelModel("resources/sprites/backgroundTile", false);
+        spritesPanelModel1 = new SpritesPanelModel("tests/resources/sprites/backgroundTile", false);
         SpritesPanelView spritesPanelView1 = new SpritesPanelView(spritesPanelModel1);
         SpritesPanelController spritesPanelController1 = new SpritesPanelController(spritesPanelModel1, spritesPanelView1);
         spritesPanelController1.control();
         JScrollPane topLeftPanel1 = new JScrollPane(spritesPanelView1);
         topLeftPanel1.setPreferredSize(new Dimension(320, 200));
 
-        spritesPanelModel2 = new SpritesPanelModel("resources/sprites/foregroundObject", true);
+        spritesPanelModel2 = new SpritesPanelModel("tests/resources/sprites/foregroundObject", true);
         SpritesPanelView spritesPanelView2 = new SpritesPanelView(spritesPanelModel2);
         SpritesPanelController spritesPanelController2 = new SpritesPanelController(spritesPanelModel2, spritesPanelView2);
         spritesPanelController2.control();
@@ -192,10 +197,10 @@ public class EditorView extends JFrame implements Observer {
         rightPanel = new JTabbedPane();
 
         model.setCurrentWorld(new GameWorld("world"));
-        GameCharacter charac = new GameCharacter("player", "resources/sprites/npc/ninja.png", new GameClass("Rogue"));
+        GameCharacter charac = new GameCharacter("player", "tests/resources/sprites/npc/ninja.png", new GameClass("Rogue"));
         charac.spawn_player(0, 0, 0);
         model.getCurrentWorld().setCharacter_(charac);
-        GameMap map1 = new GameMap("Map", 200, 200, "resources/sprites/backgroundTile/grass.png");
+        GameMap map1 = new GameMap("Map", 200, 200, "tests/resources/sprites/backgroundTile/grass.png");
         model.getCurrentWorld().addMap(map1);
 
         MapPanelModel mapPanelModel = new MapPanelModel(model.getCurrentWorld().getMap(0));
@@ -233,7 +238,9 @@ public class EditorView extends JFrame implements Observer {
 
     private void addAllMaps() {
         Hashtable<Integer, GameMap> maps = model.getCurrentWorld().getMaps();
-        for (GameMap map : maps.values()) {
+        ArrayList<GameMap> list = new ArrayList<>(maps.values());
+        for (int i = list.size()-1; i >= 0; i--) {
+            GameMap map = list.get(i);
             MapPanelModel mapPanelModel = new MapPanelModel(map);
             MapPanelView mapPanelView = new MapPanelView(mapPanelModel);
             MapPanelController mapPanelController = new MapPanelController(mapPanelModel, mapPanelView);
@@ -323,6 +330,7 @@ public class EditorView extends JFrame implements Observer {
     public JButton getMoveButton() { return moveButton; }
     public JButton getSelectButton() { return selectButton; }
     public JButton getRemoveButton() { return removeButton; }
+    public JButton getTileRemoveButton() { return tileEraserButton; }
     public JButton getWalkableButton() { return walkableButton; }
     public JButton getNotwalkableButton() { return notwalkableButton; }
     public JButton getRainButton() { return rainButton; }

@@ -63,10 +63,8 @@ public class GameModel implements Observable {
             if (speedForce)
                 world_.getCharacter().moveDown(world_);
             world_.getCharacter().moveDown(world_);
-        }  else {
-            System.out.println("STOP");
+        }  else
             return;
-        }
         int x =  world_.getCharacter().getX();
         int y =  world_.getCharacter().getY();
         GameObject cur = getCurrent_map().has_script(x, y);

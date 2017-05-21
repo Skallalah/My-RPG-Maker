@@ -20,12 +20,10 @@ import java.util.Hashtable;
 public class EditorController {
     private EditorModel model;
     private EditorView view;
-    private boolean ctrlPressed;
 
     public EditorController(EditorModel model, EditorView view){
         this.model = model;
         this.view = view;
-        ctrlPressed = false;
     }
 
     public void control(){
@@ -217,6 +215,16 @@ public class EditorController {
             }
         });
 
+        view.getTileRemoveButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                Executor.executor.submit(() -> {
+                    SpriteResources.selectedSprite = "tileRemove";
+                    model.setEraserCursor();
+                });
+            }
+        });
+
         view.getUndoButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -231,7 +239,7 @@ public class EditorController {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 Executor.executor.submit(() -> {
-                    GameCharacter charac = new GameCharacter("player", "resources/sprites/npc/ninja.png", new GameClass("Rogue"));
+                    GameCharacter charac = new GameCharacter("player", "tests/resources/sprites/npc/ninja.png", new GameClass("Rogue"));
 
                     if (EditorProperties.playerPosition == null) {
                         model.errorOnPlayerPosition();
@@ -315,7 +323,7 @@ public class EditorController {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 Executor.executor.submit(() -> {
-                    EditorProperties.weatherTile = "resources/sprites/weather/rain.png";
+                    EditorProperties.weatherTile = "tests/resources/sprites/weather/rain.png";
                     MapPanelModel.fillSelectionWithProperties(false);
                 });
             }
@@ -325,7 +333,7 @@ public class EditorController {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 Executor.executor.submit(() -> {
-                    EditorProperties.weatherTile = "resources/sprites/weather/snow.png";
+                    EditorProperties.weatherTile = "tests/resources/sprites/weather/snow.png";
                     MapPanelModel.fillSelectionWithProperties(false);
                 });
             }

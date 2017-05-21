@@ -102,7 +102,7 @@ public class NewView extends JFrame implements Observer {
         String width = getJwidth().getText();
         String height = getJheight().getText();
         if(!title.equals("") && !width.equals("") && !height.equals("")){
-            GameMap tmpMap = new GameMap(title, Integer.parseInt(width), Integer.parseInt(height), "resources/sprites/backgroundTile/grass.png");
+            GameMap tmpMap = new GameMap(title, Integer.parseInt(width), Integer.parseInt(height), "tests/resources/sprites/backgroundTile/grass.png");
             EditorModel.getSelf().getCurrentWorld().addMap(tmpMap);
             MapPanelModel mapPanelModel = new MapPanelModel(tmpMap);
             MapPanelView mapPanelView = new MapPanelView(mapPanelModel);

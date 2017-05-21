@@ -81,6 +81,8 @@ public class MapPanelController {
     private void action(int x, int y) {
         if (SpriteResources.selectedSprite.equals("remove"))
             model.removeObjects(x,y);
+        else if (SpriteResources.selectedSprite.equals("tileRemove"))
+            model.removeTile(x, y);
         else if (SpriteResources.selectedSprite.equals("move"))
             model.grab(x, y);
         else

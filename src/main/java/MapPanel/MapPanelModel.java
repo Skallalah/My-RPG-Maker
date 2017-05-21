@@ -20,7 +20,6 @@ import EditorWindow.Walkable;
 import Game.GameForeground;
 import Game.GameMap;
 import Game.GameObject;
-import Game.GameScript;
 
 public class MapPanelModel implements Observable {
     private ArrayList<Observer> observerList = new ArrayList<>();
@@ -130,7 +129,7 @@ public class MapPanelModel implements Observable {
 
         Vector<GameObject> events = map.getEvents();
         for (GameObject evt : events) {
-            String path = evt.get_sprite().replace("\\", "/");;
+            String path = evt.get_sprite();
             BufferedImage img = SpriteResources.pathToImage.get(path);
 
             int ox = evt.getX();
@@ -144,6 +143,18 @@ public class MapPanelModel implements Observable {
         }
 
         notifyObserver("repaint");
+    }
+
+    public void removeTile(int x, int y) {
+        String grass = "tests/resources/sprites/backgroundTile/grass.png";
+        if (!map.getPathTile(x, y).equals(grass))
+        {
+            History.addEvent(new Event(Event.Action.ADD_TILE, map, x, y));
+            map.setPathTile(x, y, grass);
+            map.setPathWeatherTile(x, y, null);
+            map.setWalkable(x, y, true);
+            notifyObserver("repaint");
+        }
     }
 
     public void grab(int x, int y) {

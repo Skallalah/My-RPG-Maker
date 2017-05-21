@@ -11,7 +11,6 @@ public class GameClass {
         prof_bonus_ = new Vector<>();
         Integer bonus = 2;
         for (int i = 1; i <= 20; i++) {
-            //System.out.println("Level: " + i + " | " + bonus);
             prof_bonus_.add(bonus);
             if (i % 4 == 0) {
                 bonus++;

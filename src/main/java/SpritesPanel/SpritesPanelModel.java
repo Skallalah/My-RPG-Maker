@@ -113,7 +113,6 @@ public class SpritesPanelModel implements Observable {
             wordEntered = wordEntered + ".png";
             for (String wordStocked : pathImages.keySet()) {
                 if (wordEntered.equals(wordStocked)) {
-                    System.out.println(wordStocked);
                     try {
                         BufferedImage img = ImageIO.read(pathImages.get(wordStocked));
                         if (img.getHeight() % 16 == 0 && img.getWidth() % 16 == 0) {

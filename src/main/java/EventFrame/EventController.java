@@ -2,20 +2,17 @@ package EventFrame;
 
 import Common.EditorProperties;
 import Common.Executor;
+import Common.SpriteResources;
 import EditorWindow.EditorModel;
-import EditorWindow.EditorView;
 import Game.Events.LaunchDialogue;
 import Game.Events.TeleportPlayer;
 import Game.GameDialogue;
-import Game.GameForeground;
 import Game.GameObject;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 
-/**
- * Created by najjaj_k on 5/16/17.
- */
 public class EventController {
 
     EventView eventView;
@@ -46,6 +43,14 @@ public class EventController {
             public void actionPerformed(ActionEvent actionEvent) {
                 Executor.executor.submit(() -> {
                     String spritePath = eventView.getSprites().getSelectedItem().toString();
+                    BufferedImage img = SpriteResources.pathToImage.get(spritePath);
+                    if (img == null) {
+                        SpriteResources.addImage(spritePath);
+                        img = SpriteResources.pathToImage.get(spritePath);
+                        if (img == null)
+                            eventModel.notifyObserver("error");
+                    }
+
                     GameObject obj = new GameObject(EditorProperties.x, EditorProperties.y, EditorProperties.currentMap.getId());
                     obj.set_sprite(spritePath);
 
@@ -101,6 +106,5 @@ public class EventController {
                 });
             }
         });
-
     }
 }

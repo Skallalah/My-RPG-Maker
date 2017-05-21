@@ -1,15 +1,9 @@
 package EventFrame;
 
-import Common.Observable;
 import Common.Observer;
-import Common.SpriteResources;
-
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 
 /**
  * Created by najjaj_k on 5/16/17.
@@ -38,7 +32,7 @@ public class EventView extends JFrame implements Observer{
         panel = new JPanel(new GridLayout(8, 1));
 
         sprites = new JComboBox();
-        getFiles("resources", sprites);
+        getFiles("tests", sprites);
         panel.add(sprites);
 
         String[] eventChoices = {"[TELEPORTER] Teleport", "[NPC] Dialog"};
@@ -170,6 +164,13 @@ public class EventView extends JFrame implements Observer{
         dispose();
     }
 
+    private void errorOnImage() {
+        JOptionPane.showMessageDialog(this,
+                "This is not a valid (multiple of 16) image.",
+                "Error on image",
+                JOptionPane.ERROR_MESSAGE);
+    }
+
     @Override
     public void update(String str) {
         if (str.equals("done")) {
@@ -178,11 +179,14 @@ public class EventView extends JFrame implements Observer{
         else if (str.equals("cancel")) {
             newCancelAction();
         }
-        if (str.equals("teleport")) {
+        else if (str.equals("teleport")) {
             teleportSettings();
         }
         else if (str.equals("dialog")) {
             dialogSettings();
+        }
+        else if (str.equals("error")) {
+            errorOnImage();
         }
     }
 }
